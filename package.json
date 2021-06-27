@@ -2,7 +2,7 @@
 	"publisher": "fujidana",
 	"name": "vscode-spec-log",
 	"displayName": "spec Log File Support",
-	"description": "Language Support for CSS's spec Log Files",
+	"description": "Language Support for CSS spec Log Files",
 	"version": "1.0.0",
 	"engines": {
 		"vscode": "^1.57.0"
@@ -25,7 +25,7 @@
 			{
 				"id": "spec-log",
 				"aliases": [
-					"speg Log",
+					"spec log",
 					"spec-log"
 				],
 				"extensions": [
@@ -41,8 +41,13 @@
 			}
 		]
 	},
+	"capabilities": {
+		"untrustedWorkspaces": {
+			"supported": true
+		}
+	},
 	"scripts": {
-		"vscode:prepublish": "npm run compile",
+		"vscode:prepublish": "npm run compile && npm run js-yaml",
 		"compile": "tsc -p ./",
 		"watch": "tsc -watch -p ./",
 		"pretest": "npm run compile && npm run lint",

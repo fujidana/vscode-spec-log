@@ -24,6 +24,8 @@ Note that the extension is not the official one developed by Certified Scientifi
 
 Lines of a __spec__ prompt such as `1.FOURC>` are picked out for code navigation and folding.
 
+![screenshot](resources/screenshot.png)
+
 ## Requirements
 
 None.

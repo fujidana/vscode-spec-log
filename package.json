@@ -1,8 +1,8 @@
 {
 	"publisher": "fujidana",
 	"name": "vscode-spec-log",
-	"displayName": "spec Log File Support",
-	"description": "Language Support for CSS spec Log Files",
+	"displayName": "spec log",
+	"description": "Language support for CSS spec log files",
 	"version": "1.0.0",
 	"engines": {
 		"vscode": "^1.57.0"
@@ -16,6 +16,15 @@
 		"instrument control",
 		"data acquisition"
 	],
+	"license": "SEE LICENSE IN LICENSE",
+	"bugs": {
+		"url": "https://github.com/fujidana/vscode-spec-log/issues"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/fujidana/vscode-spec-log.git"
+	},
+	"homepage": "https://github.com/fujidana/vscode-spec-log/blob/master/README.md",
 	"activationEvents": [
 		"onLanguage:spec-log"
 	],

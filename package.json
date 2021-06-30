@@ -1,6 +1,6 @@
 {
 	"publisher": "fujidana",
-	"name": "vscode-spec-log",
+	"name": "spec-log",
 	"displayName": "spec log",
 	"description": "Language support for CSS spec log files",
 	"version": "1.0.0",

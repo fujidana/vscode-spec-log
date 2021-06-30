@@ -16,6 +16,7 @@
 		"instrument control",
 		"data acquisition"
 	],
+	"icon": "resources/icon.png",
 	"license": "SEE LICENSE IN LICENSE",
 	"bugs": {
 		"url": "https://github.com/fujidana/vscode-spec-log/issues"

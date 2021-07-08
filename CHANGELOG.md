@@ -32,5 +32,3 @@ All notable changes to the "vscode-spec-log" extension will be documented in thi
 
 [Unreleased]: https://github.com/fujidana/vscode-spec-log/compare/v1.0.0...HEAD
 [1.0.0]: https://github.com/fujidana/vscode-spec-log/releases/tag/v1.0.0
-
-<!--markdownlint-configure-file { "MD024": false } -->

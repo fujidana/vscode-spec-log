@@ -1,6 +1,7 @@
 import * as vscode from 'vscode';
 
-const LOG_SELECTOR = { scheme: 'file', language: 'spec-log' };
+const LOG_SELECTOR = { language: 'spec-log' };
+// const LOG_SELECTOR = { scheme: 'file', language: 'spec-log' };
 
 /**
  * Provider class
@@ -48,7 +49,7 @@ export class LogProvider implements vscode.FoldingRangeProvider, vscode.Document
 
         const lineCount = document.lineCount;
         const results: vscode.DocumentSymbol[] = [];
-        let prevMatch: {range: vscode.Range, matches: RegExpMatchArray} | undefined;
+        let prevMatch: { range: vscode.Range, matches: RegExpMatchArray } | undefined;
 
         for (let index = 0; index < lineCount; index++) {
             const matches = document.lineAt(index).text.match(this.regexp);
@@ -57,7 +58,7 @@ export class LogProvider implements vscode.FoldingRangeProvider, vscode.Document
                     const fullRange = new vscode.Range(prevMatch.range.start, new vscode.Position(index - 1, 0));
                     results.push(new vscode.DocumentSymbol(prevMatch.matches[1], prevMatch.matches[2], vscode.SymbolKind.Key, fullRange, prevMatch.range));
                 }
-                prevMatch = { range: new vscode.Range(index, 0, index, matches[0].length), matches: matches};
+                prevMatch = { range: new vscode.Range(index, 0, index, matches[0].length), matches: matches };
             }
         }
 

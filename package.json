@@ -3,7 +3,7 @@
 	"name": "spec-log",
 	"displayName": "spec log",
 	"description": "Language support for CSS spec log files",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"engines": {
 		"vscode": "^1.57.0"
 	},
@@ -25,7 +25,7 @@
 		"type": "git",
 		"url": "https://github.com/fujidana/vscode-spec-log.git"
 	},
-	"homepage": "https://github.com/fujidana/vscode-spec-log/blob/master/README.md",
+	"homepage": "https://github.com/fujidana/vscode-spec-log#readme",
 	"activationEvents": [
 		"onLanguage:spec-log"
 	],

@@ -1,9 +1,10 @@
 # __spec__ Log File Extension for Visual Studio Code
 
-The extension enhances user experiences in browsing log files __spec__ software outputs after __spec__ is launched with `-l logfile` option.
+The extension enhances user experiences in browsing log files __spec__ software outputs when __spec__ is launched with `-l logfile` option.
 
-The default file extention of __spec__ log files is `.tlog` but VS Code provides ways for a user to change the association.
-Check VS Code official documents for further details.
+__spec__ does not specify the filename extension of log files.
+While this VS Code extension by default treats `.tlog` as the file extension of log files (language identifier: `spec-log`), users can change the association by themselves.
+Read [Language Support in Visual Studio Code](https://code.visualstudio.com/docs/languages/overview) (official document of VS Code) for further details.
 
 ## What's __spec__?
 
@@ -13,7 +14,7 @@ Check VS Code official documents for further details.
 _cited from [CSS - Certified Scientific Software](https://www.certif.com) homepage._
 
 Note that the extension is not the official one developed by Certified Scientific Software.
-<!-- Use [GitHub issues](https://github.com/fujidana/vscode-spec/issues) for bug reports and feature requests about the extension. -->
+<!-- Use [GitHub issues](https://github.com/fujidana/vscode-spec-log/issues) for bug reports and feature requests about the extension. -->
 
 ## Features
 

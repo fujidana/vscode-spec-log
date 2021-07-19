@@ -20,7 +20,7 @@ repository:
     begin: ^  (\#) (( (.{7}\S\b))+  ( (.{7}\S\b))+) $
     beginCaptures:
       "0": { name: meta.scan.table.header.spec-log }
-      "1": { name: keyword.other.scan-number.spec.log }
+      "1": { name: keyword.other.scan-number.spec-log }
       "2": { patterns: [{ include: "#long-names-only" }] }
     end: ^$
     name: meta.scan.table.spec-log
@@ -42,15 +42,20 @@ repository:
       - match: \b(?<!\.)[0-9]+(?:\.[0-9]*)?(?:(e|E)[+-]?[0-9]+)?(?![\.\w])
         name: constant.numeric.float.spec-log
         # captures:
-        #   "1": { name: keyword.other.float.scientific-notation.spec }
+        #   "1": { name: keyword.other.float.scientific-notation.spec-log }
       - match: (?<!\w)\.[0-9]+(?:(e|E)[+-]?[0-9]+)?(?![\.\w])
         name: constant.numeric.float.spec-log
         # captures:
-        #   "1": { name: keyword.other.float.scientific-notation.spec }
+        #   "1": { name: keyword.other.float.scientific-notation.spec-log }
   literal-string:
     patterns:
-      - match: '(")(\.|[^"\\])*(")'
-        name: string.quoted.double.spec
-        captures:
-          "1" : { name: punctuation.string.begin.spec }
-          "3" : { name: punctuation.string.end.spec }
+      - begin: '"'
+        beginCaptures:
+          "0": { name: punctuation.string.begin.spec-log }
+        end: '"'
+        endCaptures:
+          "0": { name: punctuation.string.end.spec-log }
+        name: string.quoted.double.spec-log
+        patterns:
+          - match: \\.
+            name: constant.character.escape.spec-log

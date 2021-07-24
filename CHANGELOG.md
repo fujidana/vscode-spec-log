@@ -4,15 +4,18 @@
 
 ## [Unreleased]
 
-## [1.0.1] - 2021-07-19
+### Fixed
 
-### Changed
+- unclosed string messing up syntax highlighting
 
-- Improve syntax highlighting rules:
-  - Add syntax highlighting on a successive prompt (e.g., `2.more> ...`).
-  - Improve syntax highlighting on a literal string that includes escaped characters (e.g., `"\n"`)
+## [1.0.1] -- 2021-07-19
 
-## [1.0.0] - 2021-06-30
+### Fixed
+
+- syntax highlighting not working on successive prompts (e.g., `2.more> ...`)
+- syntax highlighting on a literal string that includes escaped characters (e.g., `"\n"`) not properly working
+
+## [1.0.0] -- 2021-06-30
 
 ### Changed
 
@@ -23,13 +26,13 @@
 
 - Support _Workspace Trust_ (all functions of the extension work in untrusted workspaces)
 
-## vscode-spec 1.4.0 - 2021-06-10
+## vscode-spec 1.4.0 -- 2021-06-10
 
 ### Changed
 
 - Refine syntax highlighting rules to __spec__ log files.
 
-## vscode-spec 1.3.0 - 2021-05-25
+## vscode-spec 1.3.0 -- 2021-05-25
 
 ### Added
 

@@ -8,7 +8,7 @@ patterns:
   - include: "#literal-string"
 repository:
   prompt-line:
-    match: ^([0-9]+)(\.)([A-Z][A-Z0-9]*)(>)\s*(\S.*)?\s*$
+    match: ^([0-9]+)(\.)([A-Za-z][A-Za-z0-9]*)(>)\s*(\S.*)?\s*$
     name: meta.prompt.spec-log
     captures:
       "1": { name: constant.numeric.spec-log }

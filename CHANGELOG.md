@@ -6,13 +6,13 @@
 
 ### Fixed
 
-- unclosed string messing up syntax highlighting
+- syntax highlighting not working on successive prompts (e.g., `2.more> ...`)
+- unenclosed string (a solitary double quoation mark, `"`) messing up syntax highlighting
 
 ## [1.0.1] -- 2021-07-19
 
 ### Fixed
 
-- syntax highlighting not working on successive prompts (e.g., `2.more> ...`)
 - syntax highlighting on a literal string that includes escaped characters (e.g., `"\n"`) not properly working
 
 ## [1.0.0] -- 2021-06-30

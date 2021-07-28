@@ -4,9 +4,11 @@
 
 ## [Unreleased]
 
+## [1.1.0] -- 2021-07-28
+
 ### Changed
 
-- Code folding and navigation features are now conscious of spec sessions (`welcome to "spec" Release x.x.x` line)
+- Code folding and navigation features are now conscious of spec sessions (separating the text blocks by `welcome to "spec" Release x.x.x` lines)
   - prompt lines such as `1.SPEC> ...` are grouped in the respective sessions.
   - Previously it was a flat sctucture consisting of the prompt lines.
 
@@ -47,6 +49,7 @@
   - code navigation
   - folding
 
-[Unreleased]: https://github.com/fujidana/vscode-spec-log/compare/v1.0.1...HEAD
+[Unreleased]: https://github.com/fujidana/vscode-spec-log/compare/v1.1.0...HEAD
+[1.1.0]: https://github.com/fujidana/vscode-spec-log/compare/v1.0.1...v1.1.0
 [1.0.1]: https://github.com/fujidana/vscode-spec-log/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/fujidana/vscode-spec-log/releases/tag/v1.0.0

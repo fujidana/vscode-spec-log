@@ -4,6 +4,12 @@
 
 ## [Unreleased]
 
+### Changed
+
+- Code folding is now conscious of spec login sessions (`welcome to "spec" Release x.x.x` line)
+  - prompt lines such as `1.SPEC> ...` are grouped in the respective sessions.
+  - Previously it was a flat sctucture consisting of the prompt lines.
+
 ### Fixed
 
 - syntax highlighting not working on successive prompts (e.g., `2.more> ...`)

@@ -1,14 +1,16 @@
 # Change Log
 
-<!-- All notable changes to the "vscode-spec-log" extension will be documented in this file. -->
-
 ## [Unreleased]
+
+### Changed
+
+- Improve symbol range detection for code nagivation.
 
 ## [1.1.0] -- 2021-07-28
 
 ### Changed
 
-- Code folding and navigation features are now conscious of spec sessions (separating the text blocks by `welcome to "spec" Release x.x.x` lines)
+- Code folding and navigation features are now conscious of spec sessions (text blocks separated by the `welcome to "spec" Release x.x.x` lines)
   - prompt lines such as `1.SPEC> ...` are grouped in the respective sessions.
   - Previously it was a flat sctucture consisting of the prompt lines.
 
@@ -28,7 +30,7 @@
 ### Changed
 
 - Split `spec-log` v1.0.0 (this extenison) from _spec Language Support_ (`vscode-spec`) v1.4.0.
-- Improve range detection in code nagivation.
+- Improve symbol range detection for code nagivation.
 
 ### Security
 

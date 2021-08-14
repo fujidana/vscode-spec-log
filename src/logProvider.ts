@@ -67,67 +67,55 @@ export class LogProvider implements vscode.FoldingRangeProvider, vscode.Document
         const lineCount = document.lineCount;
         const welcomeSymbols: vscode.DocumentSymbol[] = [];
         const promptSymbols: vscode.DocumentSymbol[] = [];
+        let previousLine: vscode.TextLine | undefined;
         let welcomeRange: vscode.Range | undefined;
-        let promptRange: vscode.Range | undefined;
-        let matches: RegExpMatchArray | null;
-        let promptName: string = '';
-        let promptDetail: string = '';
+        let promptInfo: { range: vscode.Range, name: string, detail: string } | undefined;
         let counter = 0;
-        const welcomeSymbolKind = vscode.SymbolKind.Enum;
-        const promptSymbolKind = vscode.SymbolKind.EnumMember;
 
-        for (let index = 0; index < lineCount; index++) {
-            const text = document.lineAt(index).text;
-            if (matches = text.match(this.promptRegExp)) {
-                if (promptRange) {
-                    const range = new vscode.Range(promptRange.start, new vscode.Position(index, 0));
-                    promptSymbols.push(new vscode.DocumentSymbol(promptName, promptDetail, promptSymbolKind, range, promptRange));
-                }
-                promptRange = new vscode.Range(index, 0, index, text.length);
-                promptName = matches[1];
-                promptDetail =  matches[2];
-            } else if (text.match(this.welcomeRegExp) && index > 0 && document.lineAt(index - 1).isEmptyOrWhitespace) {
-                if (promptRange) {
-                    const range = new vscode.Range(promptRange.start, new vscode.Position(index - 1, 0));
-                    promptSymbols.push(new vscode.DocumentSymbol(promptName, promptDetail, promptSymbolKind, range, promptRange));
-                    // symbols.push(new vscode.FoldingRange(promptLineIndex, index - 2));
-                }
-                if (welcomeRange) {
-                    const range = new vscode.Range(welcomeRange.start, new vscode.Position(index - 1, 0));
-                    const welcomeSymbol = new vscode.DocumentSymbol(`session #${++counter}`, '', welcomeSymbolKind, range, welcomeRange);
-                    welcomeSymbol.children.push(...promptSymbols);
-                    welcomeSymbols.push(welcomeSymbol);
-                    promptSymbols.length = 0;
-                } else if (promptSymbols.length > 0) {
-                    const range = new vscode.Range(0, 0, index - 1, 0);
-                    const selectionRange = new vscode.Range(0, 0, 0, 0);
-                    const  welcomeSymbol = new vscode.DocumentSymbol('session #0', '', welcomeSymbolKind, range, selectionRange);
-                    welcomeSymbol.children.push(...promptSymbols);
-                    welcomeSymbols.push(welcomeSymbol);
-                    promptSymbols.length = 0;
-                }
-                promptRange = undefined;
-                welcomeRange = new vscode.Range(index - 1, 0, index, text.length);
+        function didFindWelcomeRangeEnd(endPosition: vscode.Position) {
+            if (promptInfo) {
+                const range = new vscode.Range(promptInfo.range.start, endPosition);
+                promptSymbols.push(new vscode.DocumentSymbol(promptInfo.name, promptInfo.detail, vscode.SymbolKind.EnumMember, range, promptInfo.range));
+            }
+            if (welcomeRange) {
+                const range = new vscode.Range(welcomeRange.start, endPosition);
+                const welcomeSymbol = new vscode.DocumentSymbol(`session #${++counter}`, '', vscode.SymbolKind.Enum, range, welcomeRange);
+                welcomeSymbol.children.push(...promptSymbols);
+                welcomeSymbols.push(welcomeSymbol);
+                promptSymbols.length = 0;
+            } else if (promptSymbols.length > 0) {
+                const documentRangeStart = new vscode.Position(0, 0);
+                const range = new vscode.Range(documentRangeStart, endPosition);
+                const selectionRange = new vscode.Range(documentRangeStart, documentRangeStart);
+                const welcomeSymbol = new vscode.DocumentSymbol('session #0', '', vscode.SymbolKind.Enum, range, selectionRange);
+                welcomeSymbol.children.push(...promptSymbols);
+                welcomeSymbols.push(welcomeSymbol);
+                promptSymbols.length = 0;
             }
         }
 
-        if (promptRange) {
-            const range = new vscode.Range(promptRange.start, new vscode.Position(lineCount, 0));
-            promptSymbols.push(new vscode.DocumentSymbol(promptName, promptDetail, promptSymbolKind, range, promptRange));
+        for (let index = 0; index < lineCount; index++) {
+            const currentLine = document.lineAt(index);
+            let matches: RegExpMatchArray | null;
+
+            if (matches = currentLine.text.match(this.promptRegExp)) {
+                if (promptInfo && previousLine) {
+                    const range = new vscode.Range(promptInfo.range.start, previousLine.range.end);
+                    promptSymbols.push(new vscode.DocumentSymbol(promptInfo.name, promptInfo.detail, vscode.SymbolKind.EnumMember, range, promptInfo.range));
+                }
+                promptInfo = { range: currentLine.range, name: matches[1], detail: matches[2] };
+            } else if (currentLine.text.match(this.welcomeRegExp) && index > 0 && previousLine && previousLine.isEmptyOrWhitespace) {
+                if (index > 1) {
+                    didFindWelcomeRangeEnd(document.lineAt(index - 2).range.end);
+                }
+                promptInfo = undefined;
+                welcomeRange = new vscode.Range(previousLine.range.start, currentLine.range.end);
+            }
+            previousLine = currentLine;
         }
-        if (welcomeRange) {
-            const range = new vscode.Range(welcomeRange.start, new vscode.Position(lineCount, 0));
-            const welcomeSymbol = new vscode.DocumentSymbol(`session #${++counter}`, '', welcomeSymbolKind, range, welcomeRange);
-            welcomeSymbol.children.push(...promptSymbols);
-            welcomeSymbols.push(welcomeSymbol);
-            promptSymbols.length = 0;
-        } else if (promptSymbols.length > 0) {
-            const range = new vscode.Range(0, 0, lineCount, 0);
-            const selectionRange = new vscode.Range(0, 0, 0, 0);
-            const  welcomeSymbol = new vscode.DocumentSymbol('session #0', '', welcomeSymbolKind, range, selectionRange);
-            welcomeSymbol.children.push(...promptSymbols);
-            welcomeSymbols.push(welcomeSymbol);
-            promptSymbols.length = 0;
+
+        if (previousLine) {
+            didFindWelcomeRangeEnd(previousLine.range.end);
         }
 
         return welcomeSymbols;

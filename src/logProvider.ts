@@ -96,9 +96,8 @@ export class LogProvider implements vscode.FoldingRangeProvider, vscode.Document
 
         for (let index = 0; index < lineCount; index++) {
             const currentLine = document.lineAt(index);
-            let matches: RegExpMatchArray | null;
-
-            if (matches = currentLine.text.match(this.promptRegExp)) {
+            const matches = currentLine.text.match(this.promptRegExp);
+            if (matches) {
                 if (promptInfo && previousLine) {
                     const range = new vscode.Range(promptInfo.range.start, previousLine.range.end);
                     promptSymbols.push(new vscode.DocumentSymbol(promptInfo.name, promptInfo.detail, vscode.SymbolKind.EnumMember, range, promptInfo.range));

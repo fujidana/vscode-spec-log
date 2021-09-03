@@ -1,6 +1,12 @@
 # Change Log
 
+All notable changes to the `fujidana/spec-log` extension will be documented in this file.
+
 ## [Unreleased]
+
+### Changed
+
+- Migrate the extension to use webpack.
 
 ## [1.1.1] -- 2021-08-14
 
@@ -12,9 +18,7 @@
 
 ### Changed
 
-- Code folding and navigation features are now conscious of spec sessions (text blocks separated by the `welcome to "spec" Release x.x.x` lines)
-  - prompt lines such as `1.SPEC> ...` are grouped in the respective sessions.
-  - Previously it was a flat sctucture consisting of the prompt lines.
+- Code folding and navigation features are now conscious of spec sessions (text blocks separated by the `welcome to "spec" Release x.x.x` lines). Prompt lines such as `1.SPEC> ...` are grouped in the respective sessions. Previously prompts are structured flatly.
 
 ### Fixed
 

@@ -3,7 +3,7 @@
 	"name": "spec-log",
 	"displayName": "spec log",
 	"description": "spec log file support for VS Code",
-	"version": "1.1.2-alpha",
+	"version": "1.2.0",
 	"engines": {
 		"vscode": "^1.59.0"
 	},

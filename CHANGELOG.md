@@ -6,6 +6,7 @@ All notable changes to the `fujidana/spec-log` extension will be documented in t
 
 ### Changed
 
+- Adapt for a web extension.
 - Migrate the extension to use webpack.
 
 ## [1.1.1] -- 2021-08-14
@@ -39,7 +40,7 @@ All notable changes to the `fujidana/spec-log` extension will be documented in t
 
 ### Security
 
-- Support _Workspace Trust_ (all functions of the extension work in untrusted workspaces)
+- Adapt for _Workspace Trust_ (all functions of the extension work in untrusted workspaces)
 
 ## vscode-spec 1.4.0 -- 2021-06-10
 

@@ -6,7 +6,7 @@ const path = require('path');
 const webpack = require('webpack');
 
 const webConfig = /** @type WebpackConfig */ {
-  context: path.dirname(__dirname),
+  context: __dirname,
   mode: 'none', // this leaves the source code as close as possible to the original (when packaging we set this to 'production')
   target: 'webworker', // web extensions run in a webworker context
   entry: {
@@ -59,7 +59,7 @@ const webConfig = /** @type WebpackConfig */ {
 };
 
 const nodeConfig = /** @type WebpackConfig */ {
-  context: path.dirname(__dirname),
+  context: __dirname,
   target: 'node', // extensions run in a node context
   mode: 'none', // this leaves the source code as close as possible to the original (when packaging we set this to 'production')
   entry: {

@@ -16,25 +16,25 @@ repository:
       "3": { name: support.variable.spec-log }
       "4": { name: keyword.other.gt.spec-log }
       "5": { name: string.interpolated.spec-log }
-  scan-table:
-    begin: ^  (\#) (( (.{7}\S\b))+  ( (.{7}\S\b))+) $
-    beginCaptures:
-      "0": { name: meta.scan.table.header.spec-log }
-      "1": { name: keyword.other.scan-number.spec-log }
-      "2": { patterns: [{ include: "#long-names-only" }] }
-    end: ^$
-    name: meta.scan.table.spec-log
-    patterns: [{ include: "#literal-numeric" }]
-  long-names-only:
-    patterns:
-      - match: \s+
-      - include: "#long-name"
-  long-name:
-    patterns:
-      - match: \b(.*\S)\b
-        name: entity.name.tag.spec-log
-        captures:
-          "1": { name: entity.name.tag.spec-log }
+  # scan-table:
+  #   begin: ^  (\#) (( (.{7}\S\b))+  ( (.{7}\S\b))+) $
+  #   beginCaptures:
+  #     "0": { name: meta.scan.table.header.spec-log }
+  #     "1": { name: keyword.other.scan-number.spec-log }
+  #     "2": { patterns: [{ include: "#long-names-only" }] }
+  #   end: ^$
+  #   name: meta.scan.table.spec-log
+  #   patterns: [{ include: "#literal-numeric" }]
+  # long-names-only:
+  #   patterns:
+  #     - match: \s+
+  #     - include: "#long-name"
+  # long-name:
+  #   patterns:
+  #     - match: \b(.*\S)\b
+  #       name: entity.name.tag.spec-log
+  #       captures:
+  #         "1": { name: entity.name.tag.spec-log }
   literal-numeric:
     patterns:
       - match: \b(?<!\.)(0|[1-9][0-9]*)(?![\.\w])

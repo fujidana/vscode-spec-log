@@ -1,3 +1,4 @@
+// imports mocha for the browser, defining the `mocha` global.
 require('mocha/mocha'); // import the mocha web build
 
 export function run(): Promise<void> {

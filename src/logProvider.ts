@@ -1,7 +1,6 @@
 import * as vscode from 'vscode';
 
 const LOG_SELECTOR = { language: 'spec-log' };
-// const LOG_SELECTOR = { scheme: 'file', language: 'spec-log' };
 
 /**
  * Provider class

@@ -1,14 +1,16 @@
 //@ts-check
-
 'use strict';
+
+//@ts-check
+/** @typedef {import('webpack').Configuration} WebpackConfig **/
 
 const path = require('path');
 const webpack = require('webpack');
 
-const webConfig = /** @type WebpackConfig */ {
-  context: __dirname,
+/** @type WebpackConfig */
+const webConfig = {
   mode: 'none', // this leaves the source code as close as possible to the original (when packaging we set this to 'production')
-  target: 'webworker', // web extensions run in a webworker context
+  target: 'webworker', // extensions run in a webworker context
   entry: {
     'extension-web': './src/extension.ts',
     'test/suite/index-web': './src/test/suite/index-web.ts'
@@ -16,7 +18,8 @@ const webConfig = /** @type WebpackConfig */ {
   output: {
     filename: '[name].js',
     path: path.join(__dirname, './dist'),
-    libraryTarget: 'commonjs'
+    libraryTarget: 'commonjs',
+    devtoolModuleFilenameTemplate: '../../[resource-path]'
   },
   resolve: {
     mainFields: ['browser', 'module', 'main'], // look for `browser` entry point in imported node modules
@@ -46,20 +49,23 @@ const webConfig = /** @type WebpackConfig */ {
   },
   plugins: [
     new webpack.ProvidePlugin({
-      process: 'process/browser' // provide a shim for the global `process` variable
-    })
+      process: 'process/browser', // provide a shim for the global `process` variable
+    }),
   ],
   externals: {
-    vscode: 'commonjs vscode' // ignored because it doesn't exist
+    vscode: 'commonjs vscode', // ignored because it doesn't exist
   },
   performance: {
     hints: false
   },
-  devtool: 'nosources-source-map' // create a source map that points to the original source file
+  devtool: 'nosources-source-map', // create a source map that points to the original source file
+  infrastructureLogging: {
+    level: 'log', // enables logging required for problem matchers
+  },
 };
 
-const nodeConfig = /** @type WebpackConfig */ {
-  context: __dirname,
+/** @type WebpackConfig */
+const nodeConfig = {
   target: 'node', // extensions run in a node context
   mode: 'none', // this leaves the source code as close as possible to the original (when packaging we set this to 'production')
   entry: {
@@ -71,7 +77,7 @@ const nodeConfig = /** @type WebpackConfig */ {
   output: {
     filename: '[name].js',
     path: path.join(__dirname, './dist'),
-    libraryTarget: 'commonjs'
+    libraryTarget: 'commonjs2'
   },
   resolve: {
     mainFields: ['module', 'main'],
@@ -98,7 +104,10 @@ const nodeConfig = /** @type WebpackConfig */ {
   performance: {
     hints: false
   },
-  devtool: 'nosources-source-map' // create a source map that points to the original source file
+  devtool: 'nosources-source-map', // create a source map that points to the original source file
+  infrastructureLogging: {
+    level: 'log', // enables logging required for problem matchers
+  },
 };
 
 module.exports = [webConfig, nodeConfig];

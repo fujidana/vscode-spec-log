@@ -4,6 +4,16 @@ All notable changes to the `fujidana/spec-log` extension will be documented in t
 
 ## [Unreleased]
 
+## [1.2.1] -- 2022-06-29
+
+### Changed
+
+- Make _Welcome to "spec" Release x.xx.xx_ message blocks foldable.
+- Update Node.js packages.
+- Raise the minimum VS Code version to 1.68.0.
+
+### Changed
+
 ## [1.2.0] -- 2021-09-13
 
 ### Changed
@@ -59,7 +69,8 @@ All notable changes to the `fujidana/spec-log` extension will be documented in t
   - code navigation
   - folding
 
-[Unreleased]: https://github.com/fujidana/vscode-spec-log/compare/v1.2.0...HEAD
+[Unreleased]: https://github.com/fujidana/vscode-spec-log/compare/v1.2.1...HEAD
+[1.2.1]: https://github.com/fujidana/vscode-spec-log/compare/v1.2.0...v1.2.1
 [1.2.0]: https://github.com/fujidana/vscode-spec-log/compare/v1.1.1...v1.2.0
 [1.1.1]: https://github.com/fujidana/vscode-spec-log/compare/v1.1.0...v1.1.1
 [1.1.0]: https://github.com/fujidana/vscode-spec-log/compare/v1.0.1...v1.1.0

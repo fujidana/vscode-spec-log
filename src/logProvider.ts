@@ -42,16 +42,16 @@ export class LogProvider implements vscode.FoldingRangeProvider, vscode.Document
                 if (welcomeLineIndex >= 0 && welcomeLineIndex < index - 2) {
                     ranges.push(new vscode.FoldingRange(welcomeLineIndex, index - 2));
                 }
-                promptLineIndex = -1;
+                promptLineIndex = index;
                 welcomeLineIndex = index - 1;
             }
         }
 
-        if (welcomeLineIndex >= 0 && welcomeLineIndex < lineCount - 1) {
-            ranges.push(new vscode.FoldingRange(welcomeLineIndex, lineCount - 1));
-        }
         if (promptLineIndex >= 0 && promptLineIndex < lineCount - 1) {
             ranges.push(new vscode.FoldingRange(promptLineIndex, lineCount - 1));
+        }
+        if (welcomeLineIndex >= 0 && welcomeLineIndex < lineCount - 1) {
+            ranges.push(new vscode.FoldingRange(welcomeLineIndex, lineCount - 1));
         }
 
         return ranges;

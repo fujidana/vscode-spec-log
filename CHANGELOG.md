@@ -4,6 +4,12 @@ All notable changes to the `fujidana/spec-log` extension will be documented in t
 
 ## [Unreleased]
 
+### Changed
+
+- Migrate the package manager to `pnpm`.
+- Update Node.js packages.
+- Raise the minimum VS Code version to 1.70.0.
+
 ## [1.2.1] -- 2022-06-29
 
 ### Changed
@@ -11,8 +17,6 @@ All notable changes to the `fujidana/spec-log` extension will be documented in t
 - Make _Welcome to "spec" Release x.xx.xx_ message blocks foldable.
 - Update Node.js packages.
 - Raise the minimum VS Code version to 1.68.0.
-
-### Changed
 
 ## [1.2.0] -- 2021-09-13
 

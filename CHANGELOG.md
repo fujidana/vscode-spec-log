@@ -4,11 +4,13 @@ All notable changes to the `fujidana/spec-log` extension will be documented in t
 
 ## [Unreleased]
 
+## [1.2.2] -- 2022-09-26
+
 ### Changed
 
-- Migrate the package manager to `pnpm`.
+- Migrate the package manager to `pnpm`. This affects developers only.
 - Update Node.js packages.
-- Raise the minimum VS Code version to 1.70.0.
+- Raise the minimum VS Code version to 1.71.0.
 
 ## [1.2.1] -- 2022-06-29
 
@@ -73,7 +75,8 @@ All notable changes to the `fujidana/spec-log` extension will be documented in t
   - code navigation
   - folding
 
-[Unreleased]: https://github.com/fujidana/vscode-spec-log/compare/v1.2.1...HEAD
+[Unreleased]: https://github.com/fujidana/vscode-spec-log/compare/v1.2.2...HEAD
+[1.2.2]: https://github.com/fujidana/vscode-spec-log/compare/v1.2.1...v1.2.2
 [1.2.1]: https://github.com/fujidana/vscode-spec-log/compare/v1.2.0...v1.2.1
 [1.2.0]: https://github.com/fujidana/vscode-spec-log/compare/v1.1.1...v1.2.0
 [1.1.1]: https://github.com/fujidana/vscode-spec-log/compare/v1.1.0...v1.1.1

@@ -31,7 +31,7 @@
 			"preLaunchTask": "npm: watch"
 		},
 		{
-			"name": "Run Web Extension in VS Code",
+			"name": "Run Web Extension",
 			"type": "pwa-extensionHost",
 			"debugWebWorkerHost": true,
 			"request": "launch",
@@ -45,7 +45,7 @@
 			"preLaunchTask": "npm: watch"
 		},
 		{
-			"name": "Extension Tests in VS Code",
+			"name": "Web Extension Tests",
 			"type": "extensionHost",
 			"debugWebWorkerHost": true,
 			"request": "launch",

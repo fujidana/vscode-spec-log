@@ -8,7 +8,7 @@ const path = require('path');
 const webpack = require('webpack');
 
 /** @type WebpackConfig */
-const webConfig = {
+const webExtensionConfig = {
   mode: 'none', // this leaves the source code as close as possible to the original (when packaging we set this to 'production')
   target: 'webworker', // extensions run in a webworker context
   entry: {
@@ -31,7 +31,7 @@ const webConfig = {
       // Webpack 5 no longer polyfills Node.js core modules automatically.
       // see https://webpack.js.org/configuration/resolve/#resolvefallback
       // for the list of Node.js core module polyfills.
-      assert: require.resolve('assert')
+      'assert': require.resolve('assert')
     }
   },
   module: {
@@ -48,24 +48,27 @@ const webConfig = {
     ]
   },
   plugins: [
+    new webpack.optimize.LimitChunkCountPlugin({
+      maxChunks: 1 // disable chunks by default since web extensions must be a single bundle
+    }),
     new webpack.ProvidePlugin({
       process: 'process/browser', // provide a shim for the global `process` variable
     }),
   ],
   externals: {
-    vscode: 'commonjs vscode', // ignored because it doesn't exist
+    'vscode': 'commonjs vscode', // ignored because it doesn't exist
   },
   performance: {
     hints: false
   },
   devtool: 'nosources-source-map', // create a source map that points to the original source file
   infrastructureLogging: {
-    level: 'log', // enables logging required for problem matchers
+    level: "log", // enables logging required for problem matchers
   },
 };
 
 /** @type WebpackConfig */
-const nodeConfig = {
+const nodeExtensionConfig = {
   target: 'node', // extensions run in a node context
   mode: 'none', // this leaves the source code as close as possible to the original (when packaging we set this to 'production')
   entry: {
@@ -75,13 +78,12 @@ const nodeConfig = {
     'test/runTest': './src/test/runTest' // used to start the VS Code test runner (@vscode/test-electron)
   },
   output: {
+    path: path.resolve(__dirname, 'dist'),
     filename: '[name].js',
-    path: path.join(__dirname, './dist'),
     libraryTarget: 'commonjs2'
   },
   resolve: {
-    mainFields: ['module', 'main'],
-    extensions: ['.ts', '.js'] // support ts-files and js-files
+    extensions: ['.ts', '.js']
   },
   module: {
     rules: [
@@ -101,13 +103,10 @@ const nodeConfig = {
     mocha: 'commonjs mocha', // don't bundle
     '@vscode/test-electron': 'commonjs @vscode/test-electron' // don't bundle
   },
-  performance: {
-    hints: false
-  },
   devtool: 'nosources-source-map', // create a source map that points to the original source file
   infrastructureLogging: {
-    level: 'log', // enables logging required for problem matchers
+    level: "log", // enables logging required for problem matchers
   },
 };
 
-module.exports = [webConfig, nodeConfig];
+module.exports = [webExtensionConfig, nodeExtensionConfig];

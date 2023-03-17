@@ -13,7 +13,7 @@
 				"--extensionDevelopmentPath=${workspaceFolder}"
 			],
 			"outFiles": [
-				"${workspaceFolder}/dist/**/*.js"
+				"${workspaceFolder}/dist/node/**/*.js"
 			],
 			"preLaunchTask": "npm: watch"
 		},
@@ -23,12 +23,13 @@
 			"request": "launch",
 			"args": [
 				"--extensionDevelopmentPath=${workspaceFolder}",
-				"--extensionTestsPath=${workspaceFolder}/dist/test/suite/index-node"
+				"--extensionTestsPath=${workspaceFolder}/out/test/suite/index-node"
 			],
 			"outFiles": [
-				"${workspaceFolder}/dist/**/*.js"
+				"${workspaceFolder}/dist/node/**/*.js",
+				"${workspaceFolder}/out/**/*.js"
 			],
-			"preLaunchTask": "npm: watch"
+			"preLaunchTask": "tasks: watch-tests"
 		},
 		{
 			"name": "Run Web Extension",
@@ -40,7 +41,7 @@
 				"--extensionDevelopmentKind=web"
 			],
 			"outFiles": [
-				"${workspaceFolder}/dist/**/*.js"
+				"${workspaceFolder}/dist/web/**/*.js"
 			],
 			"preLaunchTask": "npm: watch"
 		},
@@ -52,10 +53,10 @@
 			"args": [
 				"--extensionDevelopmentPath=${workspaceFolder}",
 				"--extensionDevelopmentKind=web",
-				"--extensionTestsPath=${workspaceFolder}/dist/test/suite/index-web"
+				"--extensionTestsPath=${workspaceFolder}/dist/web/test/suite/index"
 			],
 			"outFiles": [
-				"${workspaceFolder}/dist/**/*.js"
+				"${workspaceFolder}/dist/web/**/*.js"
 			],
 			"preLaunchTask": "npm: watch"
 		}

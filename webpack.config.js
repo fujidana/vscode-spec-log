@@ -12,12 +12,12 @@ const webExtensionConfig = {
   mode: 'none', // this leaves the source code as close as possible to the original (when packaging we set this to 'production')
   target: 'webworker', // extensions run in a webworker context
   entry: {
-    'extension-web': './src/extension.ts',
-    'test/suite/index-web': './src/test/suite/index-web.ts'
+    'extension': './src/extension.ts',
+    'test/suite/index': './src/test/suite/index-web.ts'
   },
   output: {
     filename: '[name].js',
-    path: path.join(__dirname, './dist'),
+    path: path.join(__dirname, './dist/web'),
     libraryTarget: 'commonjs',
     devtoolModuleFilenameTemplate: '../../[resource-path]'
   },
@@ -72,13 +72,12 @@ const nodeExtensionConfig = {
   target: 'node', // extensions run in a node context
   mode: 'none', // this leaves the source code as close as possible to the original (when packaging we set this to 'production')
   entry: {
-    'extension-node': './src/extension.ts', // source of the node extension main file
-    'test/suite/index-node': './src/test/suite/index-node.ts', // source of the node extension test runner
-    'test/suite/extension.test': './src/test/suite/extension.test.ts', // create a separate file for the tests, to be found by glob
-    'test/runTest': './src/test/runTest' // used to start the VS Code test runner (@vscode/test-electron)
+    'extension': './src/extension.ts',
+    // 'test/suite/index': './src/test/suite/index-node.ts',
+    // 'test/runTest': './src/test/runTest' // used to start the VS Code test runner (@vscode/test-electron)
   },
   output: {
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, 'dist/node'),
     filename: '[name].js',
     libraryTarget: 'commonjs2'
   },
@@ -100,8 +99,8 @@ const nodeExtensionConfig = {
   },
   externals: {
     vscode: 'commonjs vscode', // ignored because it doesn't exist
-    mocha: 'commonjs mocha', // don't bundle
-    '@vscode/test-electron': 'commonjs @vscode/test-electron' // don't bundle
+    // mocha: 'commonjs mocha', // don't bundle
+    // '@vscode/test-electron': 'commonjs @vscode/test-electron' // don't bundle
   },
   devtool: 'nosources-source-map', // create a source map that points to the original source file
   infrastructureLogging: {

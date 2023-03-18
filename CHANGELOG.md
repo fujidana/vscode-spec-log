@@ -4,6 +4,13 @@ All notable changes to the `fujidana/spec-log` extension will be documented in t
 
 ## [Unreleased]
 
+## [1.2.4] -- 2023-03-18
+
+### Changed
+
+- Update Node.js packages.
+- Raise the minimum VS Code version to 1.76.0.
+
 ## [1.2.3] -- 2022-12-28
 
 ### Changed
@@ -82,7 +89,8 @@ All notable changes to the `fujidana/spec-log` extension will be documented in t
   - code navigation
   - folding
 
-[Unreleased]: https://github.com/fujidana/vscode-spec-log/compare/v1.2.3...HEAD
+[Unreleased]: https://github.com/fujidana/vscode-spec-log/compare/v1.2.4...HEAD
+[1.2.4]: https://github.com/fujidana/vscode-spec-log/compare/v1.2.3...v1.2.4
 [1.2.3]: https://github.com/fujidana/vscode-spec-log/compare/v1.2.2...v1.2.3
 [1.2.2]: https://github.com/fujidana/vscode-spec-log/compare/v1.2.1...v1.2.2
 [1.2.1]: https://github.com/fujidana/vscode-spec-log/compare/v1.2.0...v1.2.1

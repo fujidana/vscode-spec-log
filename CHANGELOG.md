@@ -6,7 +6,8 @@ All notable changes to the `fujidana/spec-log` extension will be documented in t
 
 ### Fixed
 
-- extension not loaded when a `spec-log` file is open
+- extension not loaded when a `spec-log` file is open (a bug introduced in v1.2.4)
+- minor syntax coloring rule to colorize `+` and `-` signs in numbers properly
 
 ## [1.2.4] -- 2023-03-18
 

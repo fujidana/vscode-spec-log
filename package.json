@@ -3,7 +3,7 @@
 	"name": "spec-log",
 	"displayName": "spec log",
 	"description": "spec log file support for VS Code",
-	"version": "1.2.4",
+	"version": "1.2.5-alpha.1",
 	"engines": {
 		"vscode": "^1.76.0"
 	},
@@ -26,7 +26,9 @@
 		"url": "https://github.com/fujidana/vscode-spec-log.git"
 	},
 	"homepage": "https://github.com/fujidana/vscode-spec-log#readme",
-	"activationEvents": [],
+	"activationEvents": [
+		"onLanguage:spec-log"
+	],
 	"main": "./dist/node/extension.js",
 	"browser": "./dist/web/extension.js",
 	"contributes": {

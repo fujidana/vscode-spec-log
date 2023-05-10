@@ -4,6 +4,10 @@ All notable changes to the `fujidana/spec-log` extension will be documented in t
 
 ## [Unreleased]
 
+### Fixed
+
+- extension not loaded when a `spec-log` file is open
+
 ## [1.2.4] -- 2023-03-18
 
 ### Changed

@@ -1,13 +1,26 @@
 import * as vscode from 'vscode';
 
+
 const LOG_SELECTOR = { language: 'spec-log' };
+
+const WELCOME_REGEXP = /^(\s*)(Welcome to "spec" Release)/;
+const PROMPT_REGEXP = /^([0-9]+\.[A-Z][A-Z0-9]*>)\s+(.*)\s*$/;
+
+/**
+ * Regular expression that matches a line consisting of numbers and separating white spaces.
+ * 
+ * The following representations will be matched:
+ * - decimal: 123, -012, +0099
+ * - digit: 1.0, -123.0, +123.02 (N/A: .111, 12.)
+ * - 10-power: 1e3, -2.0E-03, +0.1e+0 (N/A: 0.1e)
+ */
+const NUMONLY_REGEXP = /^\s*([+-]?[0-9]+(?:\.[0-9]+)?(?:[eE][+-]?[0-9]+)?(?:\s+|$))+$/;
+
 
 /**
  * Provider class
  */
 export class LogProvider implements vscode.FoldingRangeProvider, vscode.DocumentSymbolProvider {
-    readonly welcomeRegExp = /^(\s*)(Welcome to "spec" Release)/;
-    readonly promptRegExp = /^([0-9]+\.[A-Z][A-Z0-9]*>)\s+(.*)\s*$/;
 
     constructor(context: vscode.ExtensionContext) {
         // register providers
@@ -27,19 +40,35 @@ export class LogProvider implements vscode.FoldingRangeProvider, vscode.Document
         const ranges: vscode.FoldingRange[] = [];
         let welcomeLineIndex = -1;
         let promptLineIndex = -1;
+        let numOnlyLineIndex = -1;
 
         for (let index = 0; index < lineCount; index++) {
+            if (token.isCancellationRequested) { return; }
+
             const text = document.lineAt(index).text;
-            if (text.match(this.promptRegExp)) {
-                if (promptLineIndex >= 0 && promptLineIndex < index - 1) {
+
+            if (NUMONLY_REGEXP.test(text)) {
+                if (numOnlyLineIndex === -1) {
+                    numOnlyLineIndex = index;
+                }
+                continue;
+            } else if (numOnlyLineIndex !== -1) {
+                if (numOnlyLineIndex < index - 2) {
+                    ranges.push(new vscode.FoldingRange(numOnlyLineIndex, index - 2));
+                }
+                numOnlyLineIndex = -1;
+            }
+
+            if (PROMPT_REGEXP.test(text)) {
+                if (promptLineIndex !== -1 && promptLineIndex < index - 1) {
                     ranges.push(new vscode.FoldingRange(promptLineIndex, index - 1));
                 }
                 promptLineIndex = index;
-            } else if (text.match(this.welcomeRegExp) && index > 0 && document.lineAt(index - 1).isEmptyOrWhitespace) {
-                if (promptLineIndex >= 0 && promptLineIndex < index - 2) {
+            } else if (WELCOME_REGEXP.test(text) && index > 0 && document.lineAt(index - 1).isEmptyOrWhitespace) {
+                if (promptLineIndex !== -1 && promptLineIndex < index - 2) {
                     ranges.push(new vscode.FoldingRange(promptLineIndex, index - 2));
                 }
-                if (welcomeLineIndex >= 0 && welcomeLineIndex < index - 2) {
+                if (welcomeLineIndex !== -1 && welcomeLineIndex < index - 2) {
                     ranges.push(new vscode.FoldingRange(welcomeLineIndex, index - 2));
                 }
                 promptLineIndex = index;
@@ -47,10 +76,13 @@ export class LogProvider implements vscode.FoldingRangeProvider, vscode.Document
             }
         }
 
-        if (promptLineIndex >= 0 && promptLineIndex < lineCount - 1) {
+        if (numOnlyLineIndex !== -1 && numOnlyLineIndex < lineCount - 2) {
+            ranges.push(new vscode.FoldingRange(numOnlyLineIndex, lineCount - 2));
+        }
+        if (promptLineIndex !== -1 && promptLineIndex < lineCount - 1) {
             ranges.push(new vscode.FoldingRange(promptLineIndex, lineCount - 1));
         }
-        if (welcomeLineIndex >= 0 && welcomeLineIndex < lineCount - 1) {
+        if (welcomeLineIndex !== -1 && welcomeLineIndex < lineCount - 1) {
             ranges.push(new vscode.FoldingRange(welcomeLineIndex, lineCount - 1));
         }
 
@@ -94,15 +126,17 @@ export class LogProvider implements vscode.FoldingRangeProvider, vscode.Document
         }
 
         for (let index = 0; index < lineCount; index++) {
+            if (token.isCancellationRequested) { return; }
+
             const currentLine = document.lineAt(index);
-            const matches = currentLine.text.match(this.promptRegExp);
+            const matches = currentLine.text.match(PROMPT_REGEXP);
             if (matches) {
                 if (promptInfo && previousLine) {
                     const range = new vscode.Range(promptInfo.range.start, previousLine.range.end);
                     promptSymbols.push(new vscode.DocumentSymbol(promptInfo.name, promptInfo.detail, vscode.SymbolKind.EnumMember, range, promptInfo.range));
                 }
                 promptInfo = { range: currentLine.range, name: matches[1], detail: matches[2] };
-            } else if (currentLine.text.match(this.welcomeRegExp) && index > 0 && previousLine && previousLine.isEmptyOrWhitespace) {
+            } else if (currentLine.text.match(WELCOME_REGEXP) && index > 0 && previousLine && previousLine.isEmptyOrWhitespace) {
                 if (index > 1) {
                     didFindWelcomeRangeEnd(document.lineAt(index - 2).range.end);
                 }

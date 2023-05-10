@@ -4,6 +4,10 @@ All notable changes to the `fujidana/spec-log` extension will be documented in t
 
 ## [Unreleased]
 
+### Added
+
+- Make output lines of scan and `u`-prefixed move commands foldable.
+
 ### Fixed
 
 - extension not loaded when a `spec-log` file is open (a bug introduced in v1.2.4)

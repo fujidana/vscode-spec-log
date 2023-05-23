@@ -4,14 +4,16 @@ All notable changes to the `fujidana/spec-log` extension will be documented in t
 
 ## [Unreleased]
 
+## [1.3.0] -- 2023-05-23
+
 ### Added
 
-- Make output lines of scan and `u`-prefixed move commands foldable.
+- Make continuous lines that consist of number only (typically output of scan and `u`-prefixed move) foldable.
 
 ### Fixed
 
 - extension not loaded when a `spec-log` file is open (a bug introduced in v1.2.4)
-- minor syntax coloring rule to colorize `+` and `-` signs in numbers properly
+- minor syntax coloring rule to colorize `+` and `-` signs in numbers
 
 ## [1.2.4] -- 2023-03-18
 
@@ -98,7 +100,8 @@ All notable changes to the `fujidana/spec-log` extension will be documented in t
   - code navigation
   - folding
 
-[Unreleased]: https://github.com/fujidana/vscode-spec-log/compare/v1.2.4...HEAD
+[Unreleased]: https://github.com/fujidana/vscode-spec-log/compare/v1.3.0...HEAD
+[1.3.0]: https://github.com/fujidana/vscode-spec-log/compare/v1.2.4...v1.3.0
 [1.2.4]: https://github.com/fujidana/vscode-spec-log/compare/v1.2.3...v1.2.4
 [1.2.3]: https://github.com/fujidana/vscode-spec-log/compare/v1.2.2...v1.2.3
 [1.2.2]: https://github.com/fujidana/vscode-spec-log/compare/v1.2.1...v1.2.2

@@ -18,20 +18,6 @@
 			"preLaunchTask": "npm: watch"
 		},
 		{
-			"name": "Extension Tests",
-			"type": "extensionHost",
-			"request": "launch",
-			"args": [
-				"--extensionDevelopmentPath=${workspaceFolder}",
-				"--extensionTestsPath=${workspaceFolder}/out/test/suite/index-node"
-			],
-			"outFiles": [
-				"${workspaceFolder}/dist/node/**/*.js",
-				"${workspaceFolder}/out/**/*.js"
-			],
-			"preLaunchTask": "tasks: watch-tests"
-		},
-		{
 			"name": "Run Web Extension",
 			"type": "pwa-extensionHost",
 			"debugWebWorkerHost": true,
@@ -53,7 +39,7 @@
 			"args": [
 				"--extensionDevelopmentPath=${workspaceFolder}",
 				"--extensionDevelopmentKind=web",
-				"--extensionTestsPath=${workspaceFolder}/dist/web/test/suite/index"
+				"--extensionTestsPath=${workspaceFolder}/dist/web/test/index"
 			],
 			"outFiles": [
 				"${workspaceFolder}/dist/web/**/*.js"

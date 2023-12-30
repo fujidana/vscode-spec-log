@@ -13,7 +13,7 @@
     // markdownlint settings
     "markdownlint.config": {
         "default": true,
-        "no-duplicate-header": false,
+        "no-duplicate-heading": false,
         "fenced-code-language": false
     }
 }

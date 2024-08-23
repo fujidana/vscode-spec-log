@@ -4,6 +4,10 @@ All notable changes to the `fujidana/spec-log` extension will be documented in t
 
 ## [Unreleased]
 
+### Added
+
+- Navigation feature (breadcrumb) is now conscious of ouputs of built-in scan commands such as `dscan` and `ascan`. The feature will be benefitial in cases multiple scans are operated by a single command (this typically happens when a user calls a user-defined macro).
+
 ### Changed
 
 - Update syntax highlighting rules.

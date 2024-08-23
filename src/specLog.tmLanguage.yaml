@@ -8,14 +8,42 @@ patterns:
   - include: "#literal-string"
 repository:
   prompt-line:
-    match: ^([0-9]+)(\.)([A-Za-z][A-Za-z0-9]*)(>)\s*(\S.*)?\s*$
+    match: ^(([0-9]+)(\.)([A-Za-z][A-Za-z0-9]*)(>)\s?)((.*))$
     name: meta.prompt.spec-log
     captures:
-      "1": { name: constant.numeric.spec-log }
-      "2": { name: keyword.other.dot.spec-log }
-      "3": { name: support.variable.spec-log }
-      "4": { name: keyword.other.gt.spec-log }
-      "5": { name: string.interpolated.spec-log }
+      "1": { name: meta.prompt.spec-log }
+      "2": { name: constant.numeric.integer.decimal.spec-log }
+      "3": { name: punctuation.separator.dot.spec-log }
+      "4": { name: variable.other.spec-log }
+      "5": { name: punctuation.separator.gt.spec-log }
+      "6": { name: markup.bold.spec-log }
+      "7": { name: string.interpolated.spec-log }
+      # "6": { name: meta.embedded.line.spec-command, patterns: [{ include: "source.spec-command" }] }    
+
+    # When one wants to colorize the command-part using spec-command rule, comment out the 
+    # 'match' patterns above and uncomment the following 'begin'/'end' patterns.
+
+    # # In the following rule, 'beginCapture' patterns capture just before the end of line
+    # # and thus, the main part (remaining string between 'begin' and 'end') is always empty.
+    # # This is intentional.
+    # # Trying to capture command parts in the 'patterns' of 'begin'/'end' rule
+    # # has a potential risk such that the failure of syntax parsing due to a single quatation
+    # # mark is spread over multiple lines.
+    # begin: ^(([0-9]+)(\.)([A-Za-z][A-Za-z0-9]*)(>)\s?)(.*)$
+    # beginCaptures:
+    #   "1": { name: meta.prompt.spec-log }
+    #   "2": { name: constant.numeric.integer.decimal.spec-log }
+    #   "3": { name: punctuation.separator.dot.spec-log }
+    #   "4": { name: variable.other.spec-log }
+    #   "5": { name: punctuation.separator.gt.spec-log }
+    #   "6": { name: meta.embedded.line.spec-command, patterns: [{ include: "source.spec-command" }] }    
+    # end: "$"
+    # # Since 'beginCapture' consumes all characters in a line, the following 'patterns'
+    # # match nothing. Even though, 'patterns' must not be commented out.
+    # # If commented out, (I don't know the reason but) the command part is not colorized.
+    # # When 'match' syntax is usted instead of 'begin'/'end' syntax, colorizing does not function.
+    # patterns: [{ include: "source.spec-command" }]
+
   # scan-table:
   #   begin: ^  (\#) (( (.{7}\S\b))+  ( (.{7}\S\b))+) $
   #   beginCaptures:
@@ -51,10 +79,10 @@ repository:
     patterns:
       - begin: '"'
         beginCaptures:
-          "0": { name: punctuation.string.begin.spec-log }
+          "0": { name: punctuation.definition.string.begin.spec-log }
         end: '"|$'
         endCaptures:
-          "0": { name: punctuation.string.end.spec-log }
+          "0": { name: punctuation.definition.string.end.spec-log }
         name: string.quoted.double.spec-log
         patterns:
           - match: \\.

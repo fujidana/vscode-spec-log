@@ -4,6 +4,12 @@ All notable changes to the `fujidana/spec-log` extension will be documented in t
 
 ## [Unreleased]
 
+### Changed
+
+- Update syntax highlighting rules.
+  - Rename several scope names, while referencing [Sublime Text / Scope Naming](https://www.sublimetext.com/docs/scope_naming.html).
+  - Make command string a user typed (i.e., strings following a __spec__ prompt) bold-faced, like codes in spec_manA4.pdf.
+
 ## [1.3.2] -- 2023-12-30
 
 ### Changed

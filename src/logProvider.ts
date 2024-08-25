@@ -14,7 +14,27 @@ const PROMPT_LINE_REGEXP = /^([0-9]+\.[A-Z][A-Z0-9]*>)\s+(.*)\s*$/;
  * - digit: 1.0, -123.0, +123.02 (N/A: .111, 12.)
  * - power of base 10: 1e3, -2.0E-03, +0.1e+0 (N/A: 0.1e)
  */
-const NUMONLY_LINE_REGEXP = /^\s*([+-]?[0-9]+(?:\.[0-9]+)?(?:[eE][+-]?[0-9]+)?(?:\s+|$))+$/;
+const NUMBER_LINE_REGEXP = /^\s*([+-]?\d+(?:\.\d+)?(?:[eE][+-]?\d+)?(?:\s+|$))+$/;
+
+/**
+ * Regular expression that matches a line consisting of time or date-and-time and separating white spaces.
+ * 
+ * The following representations will be matched:
+ * - The fomart `date()` outputs, e.g., `Wed Jan 31 01:23:45 2024`
+ *   - The format may be different on the Linux system that spec depends. Only the format like the example above is supported.
+ * - hours, minutes and seconds separated by a comma `:`, e.g., `01:23`, `1:23:45.7890`
+ * - ISO 8601 basic and extended formats, e.g., `2024-01-31T01:23:45+09:00`, `20240131T012345+0900`
+ *   - The time zone can be omitted (though it is not compliant)
+ */
+const DATETIME_LINE_REGEXP = new RegExp(
+    '^\\s*((' +
+    /(?:Sun|Mon|Tue|Wed|Thu|Fri|Sat) (?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) \d{1,2} \d{1,2}:\d{2}:\d{2} \d{4}/.source + '|' +
+    /\d+:\d{2}(?::\d{2})?(?:[,.]\d+)?/.source + '|' +
+    /\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:[,.]\d+)?(?:Z|[+-]\d{2}(?::\d{2})?)?/.source + '|' +
+    /\d{8}T\d{6}(?:Z|[+-]\d{2}\d{2}?)?/.source +
+    ')(?:\\s+|$))+$'
+);
+
 
 /*
  * Regular expression that matches the first line of a scan.
@@ -47,23 +67,35 @@ export class LogProvider implements vscode.FoldingRangeProvider, vscode.Document
         const ranges: vscode.FoldingRange[] = [];
         let welcomeLineIndex = -1;
         let promptLineIndex = -1;
-        let numOnlyLineIndex = -1;
+        let updatingLineIndex = -1;
+        let updatingType: 'number' | 'datetime' | undefined;
 
         for (let index = 0; index < lineCount; index++) {
             if (token.isCancellationRequested) { return; }
 
             const text = document.lineAt(index).text;
 
-            if (NUMONLY_LINE_REGEXP.test(text)) {
-                if (numOnlyLineIndex === -1) {
-                    numOnlyLineIndex = index;
+            const isNumLine = NUMBER_LINE_REGEXP.test(text);
+            const isDateTimeLine = DATETIME_LINE_REGEXP.test(text);
+
+            if (isNumLine || isDateTimeLine) {
+                if (updatingLineIndex === -1) {
+                    updatingLineIndex = index;
+                    updatingType = isNumLine ? 'number': 'datetime';
+                } else if (isNumLine && updatingType === 'datetime' || isDateTimeLine && updatingType === 'number') {
+                    if (updatingLineIndex < index - 2) {
+                        ranges.push(new vscode.FoldingRange(updatingLineIndex, index - 2));
+                    }
+                    updatingLineIndex = index;
+                    updatingType = isNumLine ? 'number': 'datetime';
                 }
                 continue;
-            } else if (numOnlyLineIndex !== -1) {
-                if (numOnlyLineIndex < index - 2) {
-                    ranges.push(new vscode.FoldingRange(numOnlyLineIndex, index - 2));
+            } else if (updatingLineIndex !== -1) {
+                if (updatingLineIndex < index - 2) {
+                    ranges.push(new vscode.FoldingRange(updatingLineIndex, index - 2));
                 }
-                numOnlyLineIndex = -1;
+                updatingLineIndex = -1;
+                updatingType = undefined;
             }
 
             if (PROMPT_LINE_REGEXP.test(text)) {
@@ -83,8 +115,8 @@ export class LogProvider implements vscode.FoldingRangeProvider, vscode.Document
             }
         }
 
-        if (numOnlyLineIndex !== -1 && numOnlyLineIndex < lineCount - 2) {
-            ranges.push(new vscode.FoldingRange(numOnlyLineIndex, lineCount - 2));
+        if (updatingLineIndex !== -1 && updatingLineIndex < lineCount - 2) {
+            ranges.push(new vscode.FoldingRange(updatingLineIndex, lineCount - 2));
         }
         if (promptLineIndex !== -1 && promptLineIndex < lineCount - 1) {
             ranges.push(new vscode.FoldingRange(promptLineIndex, lineCount - 1));
@@ -145,7 +177,7 @@ export class LogProvider implements vscode.FoldingRangeProvider, vscode.Document
             } else if ((matches = currentLine.text.match(SCAN_LINE_REGEXP)) !== null) {
                 if (lastPromptSymbol && index + 4 < lineCount && document.lineAt(index + 2).isEmptyOrWhitespace && /\s*#/.test(document.lineAt(index + 3).text)) {
                     index += 4;
-                    while (index < lineCount && NUMONLY_LINE_REGEXP.test(document.lineAt(index).text)) {
+                    while (index < lineCount && NUMBER_LINE_REGEXP.test(document.lineAt(index).text)) {
                         index++;
                     }
                     index--;

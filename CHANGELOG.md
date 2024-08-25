@@ -7,6 +7,7 @@ All notable changes to the `fujidana/spec-log` extension will be documented in t
 ### Added
 
 - Navigation feature (breadcrumb) is now conscious of ouputs of built-in scan commands such as `dscan` and `ascan`. The feature will be benefitial in cases multiple scans are operated by a single command (this typically happens when a user calls a user-defined macro).
+- Make continuous lines that consist of date and time only foldable. This may be useful for users who defined a count-down timer macro and used it.
 
 ### Changed
 

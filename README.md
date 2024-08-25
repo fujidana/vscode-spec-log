@@ -24,9 +24,14 @@ Use [GitHub issues](https://github.com/fujidana/vscode-spec-log/issues) for bug 
   * __Show all symbol definitions within a document__
 * __Code folding__
 
-Lines of a __spec__ prompt such as `1.FOURC>` are picked out for code navigation and folding.
+Lines starting with a __spec__ prompt such as `1.FOURC>` are picked out for code navigation and folding.
 
 ![screenshot](resources/screenshot.png)
+
+## Tips
+
+With this extension, one can only show lines of __spec__ prompts (i.e., what you typed) and hide the other lines.
+To do so, use "Fold Level 2" command or its equivalent Keyboard shortcut (Ctrl+K Ctrl+2 (Windows/Linux) or Command+K Command+2 (macOS), by default).
 
 ## Requirements
 

@@ -4,6 +4,8 @@ All notable changes to the `fujidana/spec-log` extension will be documented in t
 
 ## [Unreleased]
 
+## [1.4.0] -- 2024-08-25
+
 ### Added
 
 - Navigation feature (breadcrumb) is now conscious of ouputs of built-in scan commands such as `dscan` and `ascan`. The feature will be benefitial in cases multiple scans are operated by a single command (this typically happens when a user calls a user-defined macro).
@@ -11,9 +13,12 @@ All notable changes to the `fujidana/spec-log` extension will be documented in t
 
 ### Changed
 
+- Update Node.js packages, including a vulnerable dependency.
+- Raise the minimum VS Code version to 1.91.0.
 - Update syntax highlighting rules.
   - Rename several scope names, while referencing [Sublime Text / Scope Naming](https://www.sublimetext.com/docs/scope_naming.html).
   - Make command string a user typed (i.e., strings following a __spec__ prompt) bold-faced, like codes in spec_manA4.pdf.
+  - Apply minor fixes.
 
 ## [1.3.2] -- 2023-12-30
 
@@ -125,7 +130,8 @@ All notable changes to the `fujidana/spec-log` extension will be documented in t
   - code navigation
   - folding
 
-[Unreleased]: https://github.com/fujidana/vscode-spec-log/compare/v1.3.2...HEAD
+[Unreleased]: https://github.com/fujidana/vscode-spec-log/compare/v1.4.0...HEAD
+[1.4.0]: https://github.com/fujidana/vscode-spec-log/compare/v1.3.2...v1.4.0
 [1.3.2]: https://github.com/fujidana/vscode-spec-log/compare/v1.3.1...v1.3.2
 [1.3.1]: https://github.com/fujidana/vscode-spec-log/compare/v1.3.0...v1.3.1
 [1.3.0]: https://github.com/fujidana/vscode-spec-log/compare/v1.2.4...v1.3.0

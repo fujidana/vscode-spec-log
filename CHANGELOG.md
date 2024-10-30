@@ -4,19 +4,23 @@ All notable changes to the `fujidana/spec-log` extension will be documented in t
 
 ## [Unreleased]
 
+### Changed
+
+- Make continous lines that consist of both date/time and number foldable. Previously lines were foldable only when those cosinst of number only or date/time only; mixed use was not supported.
+
 ## [1.4.0] -- 2024-08-25
 
 ### Added
 
 - Navigation feature (breadcrumb) is now conscious of ouputs of built-in scan commands such as `dscan` and `ascan`. The feature will be benefitial in cases multiple scans are operated by a single command (this typically happens when a user calls a user-defined macro).
-- Make continuous lines that consist of date and time only foldable. This may be useful for users who defined a count-down timer macro and used it.
+- Make continuous lines that consist of date and time only foldable. This may be useful for users who uses a user-defined count-down timer macro.
 
 ### Changed
 
 - Update Node.js packages, including a vulnerable dependency.
 - Raise the minimum VS Code version to 1.91.0.
 - Update syntax highlighting rules.
-  - Rename several scope names, while referencing [Sublime Text / Scope Naming](https://www.sublimetext.com/docs/scope_naming.html).
+  - Rename several scope names (reference: [Sublime Text / Scope Naming](https://www.sublimetext.com/docs/scope_naming.html)).
   - Make command string a user typed (i.e., strings following a __spec__ prompt) bold-faced, like codes in spec_manA4.pdf.
   - Apply minor fixes.
 

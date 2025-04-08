@@ -4,6 +4,11 @@ All notable changes to the `fujidana/spec-log` extension will be documented in t
 
 ## [Unreleased]
 
+### Changed
+
+- Update Node.js packages.
+- Raise the minimum VS Code version to 1.98.0.
+
 ## [1.4.2] -- 2025-02-17
 
 ### Changed

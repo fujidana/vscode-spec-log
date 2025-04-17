@@ -3,9 +3,9 @@
 	"name": "spec-log",
 	"displayName": "spec log",
 	"description": "spec log file support for VS Code",
-	"version": "1.4.3-alpha.0",
+	"version": "1.4.3-alpha.1",
 	"engines": {
-		"vscode": "^1.98.0"
+		"vscode": "^1.99.0"
 	},
 	"categories": [
 		"Programming Languages"
@@ -77,7 +77,7 @@
 		"@types/assert": "^1.5.11",
 		"@types/mocha": "^10.0.10",
 		"@types/node": "20.x",
-		"@types/vscode": "^1.98.0",
+		"@types/vscode": "^1.99.0",
 		"@types/webpack-env": "^1.18.8",
 		"@typescript-eslint/eslint-plugin": "^8.28.0",
 		"@typescript-eslint/parser": "^8.28.0",

@@ -3,9 +3,9 @@
 	"name": "spec-log",
 	"displayName": "spec log",
 	"description": "spec log file support for VS Code",
-	"version": "1.4.3-alpha.1",
+	"version": "1.4.3-alpha.2",
 	"engines": {
-		"vscode": "^1.99.0"
+		"vscode": "^1.100.0"
 	},
 	"categories": [
 		"Programming Languages"
@@ -77,21 +77,21 @@
 		"@types/assert": "^1.5.11",
 		"@types/mocha": "^10.0.10",
 		"@types/node": "20.x",
-		"@types/vscode": "^1.99.0",
+		"@types/vscode": "^1.100.0",
 		"@types/webpack-env": "^1.18.8",
-		"@typescript-eslint/eslint-plugin": "^8.28.0",
-		"@typescript-eslint/parser": "^8.28.0",
+		"@typescript-eslint/eslint-plugin": "^8.31.1",
+		"@typescript-eslint/parser": "^8.31.1",
 		"@vscode/test-cli": "^0.0.10",
-		"@vscode/test-electron": "^2.4.1",
-		"@vscode/test-web": "^0.0.68",
+		"@vscode/test-electron": "^2.5.2",
+		"@vscode/test-web": "^0.0.69",
 		"assert": "^2.1.0",
-		"eslint": "^9.23.0",
+		"eslint": "^9.25.1",
 		"js-yaml": "^4.1.0",
 		"mocha": "^11.1.0",
 		"process": "^0.11.10",
 		"ts-loader": "^9.5.2",
-		"typescript": "^5.8.2",
-		"webpack": "^5.98.0",
+		"typescript": "^5.8.3",
+		"webpack": "^5.99.7",
 		"webpack-cli": "^6.0.1"
 	},
 	"packageManager": "pnpm@10.4.1+sha512.c753b6c3ad7afa13af388fa6d808035a008e30ea9993f58c6663e2bc5ff21679aa834db094987129aa4d488b86df57f7b634981b2f827cdcacc698cc0cfb88af"

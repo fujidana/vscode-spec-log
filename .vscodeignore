@@ -15,4 +15,5 @@ vsc-extension-quickstart.md
 **/*.ts
 **/.vscode-test.*
 dist/**/test/**
-**/.gitkeep
+syntaxes/*.yaml
+pnpm-lock.yaml

@@ -71,7 +71,7 @@
 		"test-web": "vscode-test-web --browserType=chromium --extensionDevelopmentPath=. --extensionTestsPath=dist/web/test/index.js",
 		"lint": "eslint src",
 		"run-in-browser": "vscode-test-web --browserType=chromium --extensionDevelopmentPath=. .",
-		"js-yaml": "js-yaml ./src/specLog.tmLanguage.yaml > ./syntaxes/specLog.tmLanguage.json"
+		"js-yaml": "js-yaml syntaxes/specLog.tmLanguage.yaml > syntaxes/specLog.tmLanguage.json"
 	},
 	"devDependencies": {
 		"@types/assert": "^1.5.11",

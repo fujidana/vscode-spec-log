@@ -15,7 +15,7 @@
 			"outFiles": [
 				"${workspaceFolder}/dist/node/**/*.js"
 			],
-			"preLaunchTask": "npm: watch"
+			"preLaunchTask": "${defaultBuildTask}"
 		},
 		{
 			"name": "Run Web Extension",
@@ -29,7 +29,7 @@
 			"outFiles": [
 				"${workspaceFolder}/dist/web/**/*.js"
 			],
-			"preLaunchTask": "npm: watch"
+			"preLaunchTask": "${defaultBuildTask}"
 		},
 		{
 			"name": "Web Extension Tests",
@@ -44,7 +44,7 @@
 			"outFiles": [
 				"${workspaceFolder}/dist/web/**/*.js"
 			],
-			"preLaunchTask": "npm: watch"
+			"preLaunchTask": "${defaultBuildTask}"
 		}
 	]
 }

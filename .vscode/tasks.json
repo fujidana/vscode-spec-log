@@ -4,30 +4,60 @@
 	"version": "2.0.0",
 	"tasks": [
 		{
+			"label": "compile",
+			"detail": "Run tsc, eslint, and esbuild",
+			"icon": {
+				"id": "tools"
+			},
 			"type": "npm",
 			"script": "compile",
-			"group": "build",
 			"problemMatcher": [
-				"$ts-webpack",
-				"$tslint-webpack"
+				"$tsc",
+				"$eslint-stylish",
+				"$esbuild"
 			]
 		},
 		{
-			"type": "npm",
-			"script": "watch",
+			"label": "watch",
+			"detail": "Watch tsc and esbuild",
+			"icon": {
+				"id": "tools"
+			},
+			"dependsOn": [
+				"npm: watch:tsc",
+				"npm: watch:esbuild"
+			],
+			"presentation": {
+				"reveal": "never"
+			},
 			"group": {
 				"kind": "build",
 				"isDefault": true
-			},
-			"presentation": {
-				"reveal": "never",
-				"group": "watchers"
-			},
+			}
+		},
+		{
+			"label": "npm: watch:esbuild",
+			"type": "npm",
+			"script": "watch:esbuild",
+			"group": "build",
+			"problemMatcher": "$esbuild-watch",
 			"isBackground": true,
-			"problemMatcher": [
-				"$ts-webpack-watch",
-				"$tslint-webpack-watch"
-			]
+			"presentation": {
+				"group": "watchers",
+				"reveal": "never"
+			}
+		},
+		{
+			"label": "npm: watch:tsc",
+			"type": "npm",
+			"script": "watch:tsc",
+			"group": "build",
+			"problemMatcher": "$tsc-watch",
+			"isBackground": true,
+			"presentation": {
+				"group": "watchers",
+				"reveal": "never"
+			}
 		},
 		{
 			"type": "npm",

@@ -39,7 +39,7 @@
 			"args": [
 				"--extensionDevelopmentPath=${workspaceFolder}",
 				"--extensionDevelopmentKind=web",
-				"--extensionTestsPath=${workspaceFolder}/dist/web/test/index"
+				"--extensionTestsPath=${workspaceFolder}/dist/web/test/extensionTests"
 			],
 			"outFiles": [
 				"${workspaceFolder}/dist/web/**/*.js"

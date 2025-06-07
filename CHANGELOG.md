@@ -6,6 +6,7 @@ All notable changes to the `fujidana/spec-log` extension will be documented in t
 
 ### Changed
 
+- Migrate the bundler from `webpack` to `esbuild`.
 - Update Node.js packages.
 - Raise the minimum VS Code version to 1.100.0.
 

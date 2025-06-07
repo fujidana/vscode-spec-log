@@ -4,24 +4,23 @@ All notable changes to the `fujidana/spec-log` extension will be documented in t
 
 ## [Unreleased]
 
+## [1.4.3] -- 2025-06-07
+
 ### Changed
 
 - Migrate the bundler from `webpack` to `esbuild`.
-- Update Node.js packages.
 - Raise the minimum VS Code version to 1.100.0.
 
 ## [1.4.2] -- 2025-02-17
 
 ### Changed
 
-- Update Node.js packages, including a vulnerable dependency.
 - Raise the minimum VS Code version to 1.97.0.
 
 ## [1.4.1] -- 2024-10-31
 
 ### Changed
 
-- Update Node.js packages.
 - Raise the minimum VS Code version to 1.95.0.
 - Make continous lines that consist of both date/time and number foldable. Previously lines were foldable only when those cosinst of number only or date/time only; mixed use was not supported.
 
@@ -34,7 +33,6 @@ All notable changes to the `fujidana/spec-log` extension will be documented in t
 
 ### Changed
 
-- Update Node.js packages, including a vulnerable dependency.
 - Raise the minimum VS Code version to 1.91.0.
 - Update syntax highlighting rules.
   - Rename several scope names (reference: [Sublime Text / Scope Naming](https://www.sublimetext.com/docs/scope_naming.html)).
@@ -45,14 +43,12 @@ All notable changes to the `fujidana/spec-log` extension will be documented in t
 
 ### Changed
 
-- Update Node.js packages, including a vulnerable dependency.
 - Raise the minimum VS Code version to 1.85.0.
 
 ## [1.3.1] -- 2023-08-20
 
 ### Changed
 
-- Update Node.js packages, including a vulnerable dependency.
 - Raise the minimum VS Code version to 1.78.0.
 
 ## [1.3.0] -- 2023-05-23
@@ -70,14 +66,12 @@ All notable changes to the `fujidana/spec-log` extension will be documented in t
 
 ### Changed
 
-- Update Node.js packages.
 - Raise the minimum VS Code version to 1.76.0.
 
 ## [1.2.3] -- 2022-12-28
 
 ### Changed
 
-- Update Node.js packages.
 - Raise the minimum VS Code version to 1.74.0.
 
 ## [1.2.2] -- 2022-09-26
@@ -85,7 +79,6 @@ All notable changes to the `fujidana/spec-log` extension will be documented in t
 ### Changed
 
 - Migrate the package manager from `npm` to `pnpm`. This affects the extension developers only.
-- Update Node.js packages.
 - Raise the minimum VS Code version to 1.71.0.
 
 ## [1.2.1] -- 2022-06-29
@@ -93,7 +86,6 @@ All notable changes to the `fujidana/spec-log` extension will be documented in t
 ### Changed
 
 - Make _Welcome to "spec" Release x.xx.xx_ message blocks foldable.
-- Update Node.js packages.
 - Raise the minimum VS Code version to 1.68.0.
 
 ## [1.2.0] -- 2021-09-13
@@ -151,7 +143,8 @@ All notable changes to the `fujidana/spec-log` extension will be documented in t
   - code navigation
   - folding
 
-[Unreleased]: https://github.com/fujidana/vscode-spec-log/compare/v1.4.2...HEAD
+[Unreleased]: https://github.com/fujidana/vscode-spec-log/compare/v1.4.3...HEAD
+[1.4.3]: https://github.com/fujidana/vscode-spec-log/compare/v1.4.2...v1.4.3
 [1.4.2]: https://github.com/fujidana/vscode-spec-log/compare/v1.4.1...v1.4.2
 [1.4.1]: https://github.com/fujidana/vscode-spec-log/compare/v1.4.0...v1.4.1
 [1.4.0]: https://github.com/fujidana/vscode-spec-log/compare/v1.3.2...v1.4.0

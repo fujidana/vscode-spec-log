@@ -30,17 +30,13 @@ Lines starting with a __spec__ prompt such as `1.FOURC>` are picked out for code
 
 ## Tips
 
-With this extension, one can only show lines of __spec__ prompts (i.e., what you typed) and hide the other lines.
-To do so, use "Fold Level 2" command or its equivalent Keyboard shortcut (Ctrl+K Ctrl+2 (Windows/Linux) or Command+K Command+2 (macOS), by default).
-
-## Requirements
-
-None.
-
-## Extension Settings
-
-None.
+With this extension, one can show only the lines of __spec__ prompts (i.e., what you typed) and hide the other lines.
+To do so, use "Fold Level 2" command or its equivalent Keyboard shortcut, Ctrl+K Ctrl+2 (Windows/Linux) or Command+K Command+2 (macOS).
 
 ## Known Issues
 
-Nothing known.
+See [GitHub issues](https://github.com/fujidana/vscode-spec-log/issues).
+
+## Contributing
+
+The extension is open to contributions. Create an issue in [GitHub Issues](https://github.com/fujidana/vscode-spec-log/issues) for a bug report or a feature request. If you want to contribute code, please read [CONTRIBUTING.md](CONTRIBUTING.md).

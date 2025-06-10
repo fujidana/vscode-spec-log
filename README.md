@@ -23,6 +23,7 @@ Use [GitHub issues](https://github.com/fujidana/vscode-spec-log/issues) for bug 
 * __Code navigation__
   * __Show all symbol definitions within a document__
 * __Code folding__
+* __Document links__
 
 Lines starting with a __spec__ prompt such as `1.FOURC>` are picked out for code navigation and folding.
 
@@ -36,6 +37,10 @@ To do so, use "Fold Level 2" command or its equivalent Keyboard shortcut, Ctrl+K
 ## Known Issues
 
 See [GitHub issues](https://github.com/fujidana/vscode-spec-log/issues).
+
+## Release Notes
+
+See [CHANGELOG.md](CHANGELOG.md).
 
 ## Contributing
 

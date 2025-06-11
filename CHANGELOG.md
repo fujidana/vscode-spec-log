@@ -8,6 +8,10 @@ All notable changes to the `fujidana/spec-log` extension will be documented in t
 
 - Make file paths in a scan headers clickable links. The path is relative to the workspace, not to the log file.
 
+### Changed
+
+- Restructure the code to make it parse log files more efficiently.
+
 ## [1.4.3] -- 2025-06-07
 
 ### Changed

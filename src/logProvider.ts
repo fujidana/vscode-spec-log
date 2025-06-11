@@ -244,13 +244,16 @@ export class LogProvider implements vscode.FoldingRangeProvider, vscode.Document
                 lastPromptSymbol = undefined;
             } else if ((matches = currentLine.text.match(SCAN_LINE_REGEXP)) !== null) {
                 // make a link if a file path is found in a scan header line.
-                const workspaceFolder = vscode.workspace.getWorkspaceFolder(document.uri);
-                if (workspaceFolder && matches[5] && matches[5].length !== 0) {
-                    documentLinks.push(new vscode.DocumentLink(
-                        new vscode.Range(index, matches[1].length + matches[4].length, index, matches[1].length + matches[4].length + matches[5].length),
-                        vscode.Uri.joinPath(workspaceFolder.uri, matches[5])
-                    ));
+                if (matches[5] && matches[5].length > 0) {
+                    const range = new vscode.Range(index, matches[1].length + matches[4].length, index, matches[1].length + matches[4].length + matches[5].length);
+                    let workspaceFolder: vscode.WorkspaceFolder | undefined;
+                    if (matches[5].startsWith('/')) {
+                        documentLinks.push(new vscode.DocumentLink(range, vscode.Uri.file(matches[5])));
+                    } else if ((workspaceFolder = vscode.workspace.getWorkspaceFolder(document.uri)) !== undefined) {
+                        documentLinks.push(new vscode.DocumentLink(range, vscode.Uri.joinPath(workspaceFolder.uri, matches[5])));
+                    }
                 }
+
                 // comsume the continuous lines if they consists of numbers scan data
                 if (lastPromptSymbol && index + 4 < lineCount && document.lineAt(index + 2).isEmptyOrWhitespace && /\s*#/.test(document.lineAt(index + 3).text)) {
                     const scanCommandStr = document.lineAt(index + 1).text;
@@ -259,7 +262,6 @@ export class LogProvider implements vscode.FoldingRangeProvider, vscode.Document
                         index++;
                     }
                     index--;
-                    // const commandStr = document.lineAt(index + 1);
                     const range = new vscode.Range(currentLine.range.start, document.lineAt(index).range.end);
                     lastPromptSymbol.children.push(new vscode.DocumentSymbol(`Scan ${matches[2]}`, scanCommandStr, vscode.SymbolKind.Number, range, currentLine.range));
                 }

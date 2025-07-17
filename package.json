@@ -50,7 +50,41 @@
 				"scopeName": "source.spec-log",
 				"path": "./syntaxes/specLog.tmLanguage.json"
 			}
-		]
+		],
+		"commands": [
+			{
+				"command": "spec-log.editor.foldLevel2",
+				"title": "Fold Prompts",
+				"icon": "$(folding-collapsed)",
+				"category": "spec-log"
+			},
+			{
+				"command": "spec-log.editor.unfoldAll",
+				"title": "Unfold All",
+				"icon": "$(folding-expanded)",
+				"category": "spec-log"
+			}
+		],
+		"menus": {
+			"commandPalette": [
+				{
+					"command": "spec-log.editor.foldLevel2",
+					"when": "1 != 1"
+				},
+				{
+					"command": "spec-log.editor.unfoldAll",
+					"when": "1 != 1"
+				}
+			],
+			"editor/title": [
+				{
+					"command": "spec-log.editor.foldLevel2",
+					"alt": "spec-log.editor.unfoldAll",
+					"group": "navigation",
+					"when": "editorLangId == 'spec-log'"
+				}
+			]
+		}
 	},
 	"capabilities": {
 		"virtualWorkspaces": true,

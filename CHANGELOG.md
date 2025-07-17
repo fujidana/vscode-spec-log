@@ -6,7 +6,8 @@ All notable changes to the `fujidana/spec-log` extension will be documented in t
 
 ### Added
 
-- Make file paths in a scan headers clickable links. The path is relative to the workspace, not to the log file.
+- Make a file path in a scan header a clickable link. The relative path is resolved relative to the workspace, not to the log file.
+- Add editor action (button in editor toolbar) to fold/unfold. issue [#8](https://github.com/fujidana/vscode-spec-log/issues/8).
 
 ### Changed
 

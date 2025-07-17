@@ -93,8 +93,18 @@ export class LogProvider implements vscode.FoldingRangeProvider, vscode.Document
             }
         }
 
+        const foldLevel2CommandHandler = (...args: any[]) => {
+            vscode.commands.executeCommand('editor.foldLevel2', ...args);
+        };
+
+        const unfoldAllCommandHandler = (...args: any[]) => {
+            vscode.commands.executeCommand('editor.unfoldAll', ...args);
+        };
+
         // Register providers and event-callback functions.
         context.subscriptions.push(
+            vscode.commands.registerCommand('spec-log.editor.foldLevel2', foldLevel2CommandHandler),
+            vscode.commands.registerCommand('spec-log.editor.unfoldAll', unfoldAllCommandHandler),
             vscode.workspace.onDidOpenTextDocument(textDocumentDidOpenListener),
             vscode.workspace.onDidChangeTextDocument(textDocumentDidChangeListener),
             vscode.workspace.onDidCloseTextDocument(textDocumentDidCloseListener),

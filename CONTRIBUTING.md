@@ -19,7 +19,7 @@ Setup for extension authoring
 Here is a step-by-step guide to set up the development environment for the extension, for those who want to contribute code or debug the extension locally.
 
 1. Install VS Code (`code`), Git (`git`), and Node.js (`node`, `npm`).
-2. Install `pnpm` and `vsce` by the following command (`vsce` is optional): `npm install --global pnpm @vscode/vsce`.
+2. Install `pnpm` by the following command: `npm install --global pnpm`.
 3. Clone the original or forked repository: `git clone https://github.com/your_username/vscode-spec-log.git`. Replace `your_username` with `fujidana` if you want to clone the original repository.
 4. Open the cloned folder with VS Code: `cd vscode-spec-log; code .` (or via GUI). In the following, we assume you are in the `vscode-spec-log` folder. The easiest way to do so is to use the terminal in VS Code (Ctrl+Shift+`).
 5. Install Node.js packages the extension depends on: `pnpm install`
@@ -39,4 +39,4 @@ One can pull the latest changes from the remote repository by the following proc
 1. Open the cloned `vscode-spec-log` folder with VS Code.
 2. To pull the latest changes in the remote repository, run `git pull` in the terminal or select "Git: Pull" in the Command Palette (Cmd+Shift+P).
 3. Resolve conflicts if any.
-4. Install any new dependencies or updates by running `pnpm install` in the terminal.
+4. Install new dependencies and updated depndencies by running `pnpm install` in the terminal.

@@ -4,6 +4,8 @@ All notable changes to the `fujidana/spec-log` extension will be documented in t
 
 ## [Unreleased]
 
+## [2.0.0] -- 2025-07-27
+
 ### Added
 
 - Make a file path in a scan header a clickable link. The relative path is resolved relative to the workspace, not to the log file.
@@ -152,7 +154,8 @@ All notable changes to the `fujidana/spec-log` extension will be documented in t
   - code navigation
   - folding
 
-[Unreleased]: https://github.com/fujidana/vscode-spec-log/compare/v1.4.3...HEAD
+[Unreleased]: https://github.com/fujidana/vscode-spec-log/compare/v2.0.0...HEAD
+[2.0.0]: https://github.com/fujidana/vscode-spec-log/compare/v1.4.3...v2.0.0
 [1.4.3]: https://github.com/fujidana/vscode-spec-log/compare/v1.4.2...v1.4.3
 [1.4.2]: https://github.com/fujidana/vscode-spec-log/compare/v1.4.1...v1.4.2
 [1.4.1]: https://github.com/fujidana/vscode-spec-log/compare/v1.4.0...v1.4.1

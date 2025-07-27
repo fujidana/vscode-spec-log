@@ -1,6 +1,6 @@
 # __spec__ Log File Extension for Visual Studio Code
 
-The extension enhances user experiences in browsing __spec__ log files with Visual Studio Code.
+The extension is designed to assist a user in browsing __spec__ log files with Visual Studio Code.
 The term _log files_ here indicates files created when __spec__ software is launched with `-l` option (e.g., `fourc -l 20210414.tlog`).
 
 __spec__ does not specify the filename extension of log files.
@@ -20,12 +20,10 @@ Use [GitHub issues](https://github.com/fujidana/vscode-spec-log/issues) for bug 
 ## Features
 
 * __Syntax highlighting__
-* __Code navigation__
+* __Code navigation__ : prompts such as `1.FOURC>` and scans are regarded as breadcrumbs.
   * __Show all symbol definitions within a document__
-* __Code folding__
-* __Document links__
-
-Lines starting with a __spec__ prompt such as `1.FOURC>` are picked out for code navigation and folding.
+* __Code folding__ : continous lines that only contains numbers or time are foldable, in addition to prompts.
+* __Document links__ : Make a file path in a scan header a clickable link. The path is relative to the workspace, not to the log file.
 
 ![screenshot](resources/screenshot.png)
 
@@ -36,7 +34,7 @@ To do so, use "Fold Level 2" command or its equivalent Keyboard shortcut, Ctrl+K
 
 ## Known Issues
 
-See [GitHub issues](https://github.com/fujidana/vscode-spec-log/issues).
+See [GitHub Issues](https://github.com/fujidana/vscode-spec-log/issues).
 
 ## Release Notes
 

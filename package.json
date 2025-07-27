@@ -17,7 +17,7 @@
 		"data acquisition"
 	],
 	"icon": "resources/icon.png",
-	"license": "SEE LICENSE IN LICENSE",
+	"license": "SEE LICENSE IN LICENSE.txt",
 	"bugs": {
 		"url": "https://github.com/fujidana/vscode-spec-log/issues"
 	},

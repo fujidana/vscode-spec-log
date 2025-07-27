@@ -54,11 +54,16 @@ type ParsedData = {
     documentLinks: vscode.DocumentLink[],
 };
 
+type UpdateSession = {
+    promisedData: Promise<ParsedData | undefined>,
+    tokenSource: vscode.CancellationTokenSource | undefined,
+};
+
 /**
  * Provider class
  */
 export class LogProvider implements vscode.FoldingRangeProvider, vscode.DocumentSymbolProvider, vscode.DocumentLinkProvider<vscode.DocumentLink> {
-    readonly parsedDataMap = new Map<string, Promise<ParsedData>>();
+    private readonly updateSessionMap: Map<string, UpdateSession> = new Map();
 
     constructor(context: vscode.ExtensionContext) {
 
@@ -66,7 +71,7 @@ export class LogProvider implements vscode.FoldingRangeProvider, vscode.Document
         // this is also invoked after the user manually changed the language id
         const textDocumentDidOpenListener = (document: vscode.TextDocument) => {
             if (vscode.languages.match(LOG_SELECTOR, document)) {
-                this.parsedDataMap.set(document.uri.toString(), parseDocument(document));
+                this.runUpdateSession(document);
             }
         };
 
@@ -74,7 +79,7 @@ export class LogProvider implements vscode.FoldingRangeProvider, vscode.Document
         const textDocumentDidChangeListener = (event: vscode.TextDocumentChangeEvent) => {
             const document = event.document;
             if (vscode.languages.match(LOG_SELECTOR, document)) {
-                this.parsedDataMap.set(document.uri.toString(), parseDocument(document));
+                this.runUpdateSession(document);
             }
         };
 
@@ -82,14 +87,14 @@ export class LogProvider implements vscode.FoldingRangeProvider, vscode.Document
         // this is also invoked after the user manually changed the language id
         const textDocumentDidCloseListener = (document: vscode.TextDocument) => {
             if (vscode.languages.match(LOG_SELECTOR, document)) {
-                this.parsedDataMap.delete(document.uri.toString());
+                this.updateSessionMap.delete(document.uri.toString());
             }
         };
 
         // When the extension is activated by opening a log file, 
         for (const document of vscode.workspace.textDocuments) {
             if (vscode.languages.match(LOG_SELECTOR, document)) {
-                this.parsedDataMap.set(document.uri.toString(), parseDocument(document));
+                this.runUpdateSession(document);
             }
         }
 
@@ -120,7 +125,7 @@ export class LogProvider implements vscode.FoldingRangeProvider, vscode.Document
     public provideFoldingRanges(document: vscode.TextDocument, context: vscode.FoldingContext, token: vscode.CancellationToken): vscode.ProviderResult<vscode.FoldingRange[]> {
         if (token.isCancellationRequested) { return; }
 
-        return this.parsedDataMap.get(document.uri.toString())?.then(parsedData => parsedData.foldingRanges);
+        return this.updateSessionMap.get(document.uri.toString())?.promisedData.then(data => data?.foldingRanges);
     }
 
     /**
@@ -129,7 +134,7 @@ export class LogProvider implements vscode.FoldingRangeProvider, vscode.Document
     public provideDocumentSymbols(document: vscode.TextDocument, token: vscode.CancellationToken): vscode.ProviderResult<vscode.SymbolInformation[] | vscode.DocumentSymbol[]> {
         if (token.isCancellationRequested) { return; }
 
-        return this.parsedDataMap.get(document.uri.toString())?.then(parsedData => parsedData.documentSymbols);
+        return this.updateSessionMap.get(document.uri.toString())?.promisedData.then(data => data?.documentSymbols);
     }
 
     /**
@@ -138,15 +143,36 @@ export class LogProvider implements vscode.FoldingRangeProvider, vscode.Document
     public provideDocumentLinks(document: vscode.TextDocument, token: vscode.CancellationToken): vscode.ProviderResult<vscode.DocumentLink[]> {
         if (token.isCancellationRequested) { return; }
 
-        return this.parsedDataMap.get(document.uri.toString())?.then(parsedData => parsedData.documentLinks);
+        return this.updateSessionMap.get(document.uri.toString())?.promisedData.then(data => data?.documentLinks);
+    }
+
+    /**
+     * Collect information for code navigation/editing.
+     * Cancellation token is integrated.
+     */
+    private runUpdateSession(document: vscode.TextDocument): void {
+        const uriString = document.uri.toString();
+
+        // If the previous update session is still runnning, cancel it.
+        this.updateSessionMap.get(uriString)?.tokenSource?.cancel();
+
+        // Create a new update session.
+        const tokenSource = new vscode.CancellationTokenSource();
+        const newSession: UpdateSession = { promisedData: parseDocument(document, tokenSource.token), tokenSource };
+        newSession.promisedData.finally(() => {
+            // Attach a callback to clean the cancellation token when update is finished.
+            tokenSource.dispose();
+            newSession.tokenSource = undefined;
+        });
+        this.updateSessionMap.set(uriString, newSession);
     }
 }
 
 /**
  * Parse document.
  */
-async function parseDocument(document: vscode.TextDocument): Promise<ParsedData> {
-    // if (token.isCancellationRequested) { return; }
+async function parseDocument(document: vscode.TextDocument, token: vscode.CancellationToken): Promise<ParsedData | undefined> {
+    if (token.isCancellationRequested) { return; }
 
     const foldingRanges: vscode.FoldingRange[] = [];
     const documentSymbols: vscode.DocumentSymbol[] = [];
@@ -159,7 +185,7 @@ async function parseDocument(document: vscode.TextDocument): Promise<ParsedData>
     let umvStart = -1;
 
     for (let lineNumber = 0; lineNumber < lineCount; lineNumber++) {
-        // if (token.isCancellationRequested) { return; }
+        if (token.isCancellationRequested) { return; }
 
         const currentLine = document.lineAt(lineNumber);
         let matches: RegExpMatchArray | null;

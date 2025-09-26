@@ -4,6 +4,10 @@ All notable changes to the `fujidana/spec-log` extension will be documented in t
 
 ## [Unreleased]
 
+### Changed
+
+- Raise the minimum VS Code version to 1.102.0.
+
 ## [2.0.0] -- 2025-07-27
 
 ### Added

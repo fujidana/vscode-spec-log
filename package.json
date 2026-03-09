@@ -69,11 +69,11 @@
 			"commandPalette": [
 				{
 					"command": "spec-log.editor.foldLevel2",
-					"when": "1 != 1"
+					"when": "editorLangId == 'spec-log' && 0 == 1"
 				},
 				{
 					"command": "spec-log.editor.unfoldAll",
-					"when": "1 != 1"
+					"when": "editorLangId == 'spec-log' && 0 == 1"
 				}
 			],
 			"editor/title": [

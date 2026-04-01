@@ -54,13 +54,13 @@
 		"commands": [
 			{
 				"command": "spec-log.editor.foldLevel2",
-				"title": "%spec-log.editor.foldLevel2.title%",
+				"title": "%command.spec-log.editor.foldLevel2.title%",
 				"icon": "$(folding-collapsed)",
 				"category": "spec-log"
 			},
 			{
 				"command": "spec-log.editor.unfoldAll",
-				"title": "%spec-log.editor.unfoldAll.title%",
+				"title": "%command.spec-log.editor.unfoldAll.title%",
 				"icon": "$(folding-expanded)",
 				"category": "spec-log"
 			}

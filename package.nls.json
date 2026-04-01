@@ -1,4 +1,4 @@
 {
-	"spec-log.editor.foldLevel2.title": "Fold Prompts",
-	"spec-log.editor.unfoldAll.title": "Unfold All"
+	"command.spec-log.editor.foldLevel2.title": "Fold Prompts",
+	"command.spec-log.editor.unfoldAll.title": "Unfold All"
 }

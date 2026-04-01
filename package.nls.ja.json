@@ -1,4 +1,4 @@
 {
-    "spec-log.editor.foldLevel2.title": "プロンプトを折りたたむ",
-    "spec-log.editor.unfoldAll.title": "すべて展開"
+    "command.spec-log.editor.foldLevel2.title": "プロンプトを折りたたむ",
+    "command.spec-log.editor.unfoldAll.title": "すべて展開"
 }

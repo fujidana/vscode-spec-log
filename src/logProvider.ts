@@ -153,7 +153,7 @@ export class LogProvider implements vscode.FoldingRangeProvider, vscode.Document
     private runUpdateSession(document: vscode.TextDocument): void {
         const uriString = document.uri.toString();
 
-        // If the previous update session is still runnning, cancel it.
+        // If the previous update session is still running, cancel it.
         this.updateSessionMap.get(uriString)?.tokenSource?.cancel();
 
         // Create a new update session.

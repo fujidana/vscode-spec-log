@@ -31,6 +31,7 @@ Use [GitHub issues](https://github.com/fujidana/vscode-spec-log/issues) for bug 
 
 With this extension, one can show only the lines of __spec__ prompts (i.e., what you typed) and hide the other lines.
 To do so, use "Fold Level 2" command or its equivalent Keyboard shortcut, Ctrl+K Ctrl+2 (Windows/Linux) or Command+K Command+2 (macOS).
+To undo this, use "Unfold All", command or its equivalent Keyboard shortcut, Ctrl+K Ctrl+J (Windows/Linux) or Command+K Command+J (macOS).
 
 ## Known Issues
 

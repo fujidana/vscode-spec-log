@@ -4,16 +4,22 @@ All notable changes to the `fujidana/spec-log` extension will be documented in t
 
 ## [Unreleased]
 
+## [2.1.0] -- 2026-03-31
+
+### Added
+
+- Internationalize the extension and add Japanese localization. Issue [#15](https://github.com/fujidana/vscode-spec-log/issues/15).
+
 ### Changed
 
-- Raise the minimum VS Code version to 1.102.0.
+- Raise the minimum VS Code version to 1.110.0.
 
 ## [2.0.0] -- 2025-07-27
 
 ### Added
 
 - Make a file path in a scan header a clickable link. The relative path is resolved relative to the workspace, not to the log file.
-- Add editor action (button in editor toolbar) to fold/unfold. issue [#8](https://github.com/fujidana/vscode-spec-log/issues/8).
+- Add editor action (button in editor toolbar) to fold/unfold. Issue [#8](https://github.com/fujidana/vscode-spec-log/issues/8).
 
 ### Changed
 
@@ -158,7 +164,8 @@ All notable changes to the `fujidana/spec-log` extension will be documented in t
   - code navigation
   - folding
 
-[Unreleased]: https://github.com/fujidana/vscode-spec-log/compare/v2.0.0...HEAD
+[Unreleased]: https://github.com/fujidana/vscode-spec-log/compare/v2.1.0...HEAD
+[2.1.0]: https://github.com/fujidana/vscode-spec-log/compare/v2.0.0...v2.1.0
 [2.0.0]: https://github.com/fujidana/vscode-spec-log/compare/v1.4.3...v2.0.0
 [1.4.3]: https://github.com/fujidana/vscode-spec-log/compare/v1.4.2...v1.4.3
 [1.4.2]: https://github.com/fujidana/vscode-spec-log/compare/v1.4.1...v1.4.2

@@ -39,4 +39,4 @@ One can pull the latest changes from the remote repository by the following proc
 1. Open the cloned `vscode-spec-log` folder with VS Code.
 2. To pull the latest changes in the remote repository, run `git pull` in the terminal or select "Git: Pull" in the Command Palette (Cmd+Shift+P).
 3. Resolve conflicts if any.
-4. Install new dependencies and updated depndencies by running `pnpm install` in the terminal.
+4. Install new dependencies and updated dependencies by running `pnpm install` in the terminal.

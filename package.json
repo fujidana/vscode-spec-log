@@ -3,7 +3,7 @@
 	"name": "spec-log",
 	"displayName": "spec log",
 	"description": "spec log file support for VS Code",
-	"version": "2.0.1-alpha.1",
+	"version": "2.1.0",
 	"engines": {
 		"vscode": "^1.110.0"
 	},
@@ -17,7 +17,7 @@
 		"data acquisition"
 	],
 	"icon": "resources/icon.png",
-	"license": "SEE LICENSE IN LICENSE.txt",
+	"license": "MIT",
 	"bugs": {
 		"url": "https://github.com/fujidana/vscode-spec-log/issues"
 	},

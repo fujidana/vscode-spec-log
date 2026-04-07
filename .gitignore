@@ -6,4 +6,5 @@ node_modules
 *.vsix
 .env
 .DS_Store
+*.tsbuildinfo
 syntaxes/*.json

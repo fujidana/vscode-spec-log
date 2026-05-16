@@ -5,7 +5,7 @@
 	"description": "spec log file support for VS Code",
 	"version": "2.1.0",
 	"engines": {
-		"vscode": "^1.110.0"
+		"vscode": "^1.120.0"
 	},
 	"categories": [
 		"Programming Languages"
@@ -105,7 +105,7 @@
 		"watch:esbuild": "node esbuild.js --watch",
 		"compile-tests": "tsc --project . --outDir out",
 		"watch-tests": "tsc --project . --outDir out --watch --preserveWatchOutput",
-		"pretest": "pnpm run compile-tests",
+		"pretest": "pnpm run lint && pnpm run compile-tests",
 		"test": "vscode-test",
 		"pretest-web": "pnpm run compile",
 		"test-web": "vscode-test-web --browserType=chromium --extensionDevelopmentPath=. --extensionTestsPath=dist/web/test/extensionTests.js",
@@ -117,7 +117,7 @@
 		"@types/assert": "^1.5.11",
 		"@types/mocha": "^10.0.10",
 		"@types/node": "22.x",
-		"@types/vscode": "^1.110.0",
+		"@types/vscode": "^1.120.0",
 		"@vscode/test-cli": "^0.0.12",
 		"@vscode/test-electron": "^2.5.2",
 		"@vscode/test-web": "^0.0.80",
@@ -128,12 +128,6 @@
 		"js-yaml": "^4.1.1",
 		"mocha": "^11.7.5",
 		"typescript": "^6.0.3",
-		"typescript-eslint": "^8.59.1"
-	},
-	"pnpm": {
-		"onlyBuiltDependencies": [
-			"@playwright/browser-chromium",
-			"esbuild"
-		]
+		"typescript-eslint": "^8.59.3"
 	}
 }

@@ -1,8 +1,6 @@
 import * as vscode from 'vscode';
 
-
 const LOG_SELECTOR = { language: 'spec-log' };
-
 const WELCOME_LINE_REGEXP = /^(\s*)(Welcome to "spec" Release)/;
 const PROMPT_LINE_REGEXP = /^([0-9]+\.[A-Z][A-Z0-9]*>)\s+(.*)\s*$/;
 
@@ -23,10 +21,10 @@ const NUMBER_LINE_REGEXP = /^\s*([+-]?\d+(?:\.\d+)?(?:[eE][+-]?\d+)?(?:\s+|$))+$
  * - number
  *   - The patterns are the same as those in `NUMBER_LINE_REGEXP`.
  * - date
-    * - The fomart `date()` outputs, e.g., `Wed Jan 31 01:23:45 2024`
-    *   - The format may be different on the Linux system that spec depends. Only the format like the example above is supported.
-    * - ISO 8601 basic and extended formats, e.g., `2024-01-31T01:23:45+09:00`, `20240131T012345+0900`
-    *   - The time zone can be omitted (though it is not compliant)
+ *   - The fomart `date()` outputs, e.g., `Wed Jan 31 01:23:45 2024`
+ *   - The format may be different on the Linux system that spec depends. Only the format like the example above is supported.
+ *   - ISO 8601 basic and extended formats, e.g., `2024-01-31T01:23:45+09:00`, `20240131T012345+0900`
+ *   - The time zone can be omitted (though it is not compliant)
  * - time
  *   - hours, minutes and seconds separated by a comma `:`, e.g., `01:23`, `1:23:45.7890`
  */
@@ -40,42 +38,38 @@ const DATETIME_LINE_REGEXP = new RegExp(
     ')(?:\\s+|$))+$'
 );
 
-
-/*
+/**
  * Regular expression that matches the first line of a scan.
  * 
  * The format of this line can be found in '_head' macro in standard.mac.
-*/
+ */
 const SCAN_LINE_REGEXP = /^(Scan\s+(\d+)\s{3}(\S.*?)\s{3})(?:(file\s*=\s*)(\S.*?)|\*\*NO DATA FILE\*\*)(?=\s{2})\s+(\S.*?)\s{2}user\s*=\s*(\S.*)$/;
 
-type ParsedData = {
-    foldingRanges: vscode.FoldingRange[],
-    documentSymbols: vscode.DocumentSymbol[],
-    documentLinks: vscode.DocumentLink[],
-};
+interface ParserSuccess {
+    foldingRanges: vscode.FoldingRange[];
+    documentSymbols: vscode.DocumentSymbol[];
+    documentLinks: vscode.DocumentLink[];
+}
 
-type UpdateSession = {
-    promisedData: Promise<ParsedData | undefined>,
-    tokenSource: vscode.CancellationTokenSource | undefined,
-};
+interface UpdateSession {
+    promise: Promise<ParserSuccess | undefined>;
+    tokenSource: vscode.CancellationTokenSource | undefined;
+}
 
-/**
- * Provider class
- */
-export class LogProvider implements vscode.FoldingRangeProvider, vscode.DocumentSymbolProvider, vscode.DocumentLinkProvider<vscode.DocumentLink> {
+/** Main controller class */
+export class Controller implements vscode.FoldingRangeProvider, vscode.DocumentSymbolProvider, vscode.DocumentLinkProvider<vscode.DocumentLink> {
     private readonly updateSessionMap: Map<string, UpdateSession> = new Map();
 
     constructor(context: vscode.ExtensionContext) {
 
-        // a hander invoked when the document is opened
-        // this is also invoked after the user manually changed the language id
+        /** Event listener for when a text document is opened. Also fired when the language ID is manually changed. */
         const textDocumentDidOpenListener = (document: vscode.TextDocument) => {
             if (vscode.languages.match(LOG_SELECTOR, document)) {
                 this.runUpdateSession(document);
             }
         };
 
-        // a hander invoked when the document is changed
+        /** Event listener for when a text document is changed. */
         const textDocumentDidChangeListener = (event: vscode.TextDocumentChangeEvent) => {
             const document = event.document;
             if (vscode.languages.match(LOG_SELECTOR, document)) {
@@ -83,30 +77,33 @@ export class LogProvider implements vscode.FoldingRangeProvider, vscode.Document
             }
         };
 
-        // a hander invoked when the document is closed
-        // this is also invoked after the user manually changed the language id
+        /** Event listener for when a text document is closed. Also fired when the language ID is manually changed. */
         const textDocumentDidCloseListener = (document: vscode.TextDocument) => {
             if (vscode.languages.match(LOG_SELECTOR, document)) {
                 this.updateSessionMap.delete(document.uri.toString());
             }
         };
 
-        // When the extension is activated by opening a log file, 
+        // When the extension is activated by opening a file the extension supports,
+        // the `onDidOpenTextDocument` event is not fired.
+        // Thus, run the parser session for each open document here.
         for (const document of vscode.workspace.textDocuments) {
             if (vscode.languages.match(LOG_SELECTOR, document)) {
                 this.runUpdateSession(document);
             }
         }
 
+        /** Callback function for the "Fold Level 2" command. */
         const foldLevel2CommandHandler = (...args: any[]) => {
             vscode.commands.executeCommand('editor.foldLevel2', ...args);
         };
 
+        /** Callback function for the "Unfold All" command. */
         const unfoldAllCommandHandler = (...args: any[]) => {
             vscode.commands.executeCommand('editor.unfoldAll', ...args);
         };
 
-        // Register providers and event-callback functions.
+        // Register command handlers, providers, and event-callback functions.
         context.subscriptions.push(
             vscode.commands.registerCommand('spec-log.editor.foldLevel2', foldLevel2CommandHandler),
             vscode.commands.registerCommand('spec-log.editor.unfoldAll', unfoldAllCommandHandler),
@@ -119,31 +116,25 @@ export class LogProvider implements vscode.FoldingRangeProvider, vscode.Document
         );
     }
 
-    /**
-     * Required implementation of vscode.FoldingRangeProvider
-     */
+    // Required implementation of vscode.FoldingRangeProvider.
     public provideFoldingRanges(document: vscode.TextDocument, context: vscode.FoldingContext, token: vscode.CancellationToken): vscode.ProviderResult<vscode.FoldingRange[]> {
         if (token.isCancellationRequested) { return; }
 
-        return this.updateSessionMap.get(document.uri.toString())?.promisedData.then(data => data?.foldingRanges);
+        return this.updateSessionMap.get(document.uri.toString())?.promise.then(data => data?.foldingRanges);
     }
 
-    /**
-     * Required implementation of vscode.DocumentSymbolProvider
-     */
+    // Required implementation of vscode.DocumentSymbolProvider.
     public provideDocumentSymbols(document: vscode.TextDocument, token: vscode.CancellationToken): vscode.ProviderResult<vscode.SymbolInformation[] | vscode.DocumentSymbol[]> {
         if (token.isCancellationRequested) { return; }
 
-        return this.updateSessionMap.get(document.uri.toString())?.promisedData.then(data => data?.documentSymbols);
+        return this.updateSessionMap.get(document.uri.toString())?.promise.then(data => data?.documentSymbols);
     }
 
-    /**
-     * Required implementation of vscode.DocumentLinkProvider
-     */
+    // Required implementation of vscode.DocumentLinkProvider.
     public provideDocumentLinks(document: vscode.TextDocument, token: vscode.CancellationToken): vscode.ProviderResult<vscode.DocumentLink[]> {
         if (token.isCancellationRequested) { return; }
 
-        return this.updateSessionMap.get(document.uri.toString())?.promisedData.then(data => data?.documentLinks);
+        return this.updateSessionMap.get(document.uri.toString())?.promise.then(data => data?.documentLinks);
     }
 
     /**
@@ -158,8 +149,10 @@ export class LogProvider implements vscode.FoldingRangeProvider, vscode.Document
 
         // Create a new update session.
         const tokenSource = new vscode.CancellationTokenSource();
-        const newSession: UpdateSession = { promisedData: parseDocument(document, tokenSource.token), tokenSource };
-        newSession.promisedData.finally(() => {
+        const newSession: UpdateSession = { promise: new Promise(
+            resolve => { resolve(parseDocument(document, tokenSource.token)); }
+        ), tokenSource };
+        newSession.promise.finally(() => {
             // Attach a callback to clean the cancellation token when update is finished.
             tokenSource.dispose();
             newSession.tokenSource = undefined;
@@ -171,8 +164,8 @@ export class LogProvider implements vscode.FoldingRangeProvider, vscode.Document
 /**
  * Parse document.
  */
-async function parseDocument(document: vscode.TextDocument, token: vscode.CancellationToken): Promise<ParsedData | undefined> {
-    if (token.isCancellationRequested) { return; }
+function parseDocument(document: vscode.TextDocument, token?: vscode.CancellationToken): ParserSuccess | undefined {
+    if (token?.isCancellationRequested) { return; }
 
     const foldingRanges: vscode.FoldingRange[] = [];
     const documentSymbols: vscode.DocumentSymbol[] = [];
@@ -185,7 +178,7 @@ async function parseDocument(document: vscode.TextDocument, token: vscode.Cancel
     let umvStart = -1;
 
     for (let lineNumber = 0; lineNumber < lineCount; lineNumber++) {
-        if (token.isCancellationRequested) { return; }
+        if (token?.isCancellationRequested) { return; }
 
         const currentLine = document.lineAt(lineNumber);
         let matches: RegExpMatchArray | null;

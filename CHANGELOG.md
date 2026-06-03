@@ -4,6 +4,12 @@ All notable changes to the `fujidana/spec-log` extension will be documented in t
 
 ## [Unreleased]
 
+## [2.1.1] -- 2026-06-03
+
+### Changed
+
+- Raise the minimum VS Code version to 1.120.0.
+
 ## [2.1.0] -- 2026-03-31
 
 ### Added
@@ -164,7 +170,8 @@ All notable changes to the `fujidana/spec-log` extension will be documented in t
   - code navigation
   - folding
 
-[Unreleased]: https://github.com/fujidana/vscode-spec-log/compare/v2.1.0...HEAD
+[Unreleased]: https://github.com/fujidana/vscode-spec-log/compare/v2.1.1...HEAD
+[2.1.1]: https://github.com/fujidana/vscode-spec-log/compare/v2.1.0...v2.1.1
 [2.1.0]: https://github.com/fujidana/vscode-spec-log/compare/v2.0.0...v2.1.0
 [2.0.0]: https://github.com/fujidana/vscode-spec-log/compare/v1.4.3...v2.0.0
 [1.4.3]: https://github.com/fujidana/vscode-spec-log/compare/v1.4.2...v1.4.3

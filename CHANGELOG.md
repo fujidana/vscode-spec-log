@@ -4,6 +4,10 @@ All notable changes to the `fujidana/spec-log` extension will be documented in t
 
 ## [Unreleased]
 
+### Added
+
+- Show a link above a scan header line to open a preview of the scan data. Issue [#19](https://github.com/fujidana/vscode-spec-log/issues/19).
+
 ## [2.1.1] -- 2026-06-03
 
 ### Changed

@@ -42,6 +42,11 @@ const DATETIME_LINE_REGEXP = new RegExp(
  * Regular expression that matches the first line of a scan.
  * 
  * The format of this line can be found in '_head' macro in standard.mac.
+ * The following is an example of the line:
+ * ```
+ * Scan   1   Sat Apr 24 12:16:07 2021   **NO DATA FILE**  eh1  user = eh1user
+ * Scan   1   Sat Apr 24 12:20:21 2021   file = align_sample.spec  eh1  user = eh1user
+ * ```
  */
 const SCAN_LINE_REGEXP = /^(Scan\s+(\d+)\s{3}(\S.*?)\s{3})(?:(file\s*=\s*)(\S.*?)|\*\*NO DATA FILE\*\*)(?=\s{2})\s+(\S.*?)\s{2}user\s*=\s*(\S.*)$/;
 
@@ -49,6 +54,7 @@ interface ParserSuccess {
     readonly foldingRanges: vscode.FoldingRange[];
     readonly documentSymbols: vscode.DocumentSymbol[];
     readonly documentLinks: vscode.DocumentLink[];
+    readonly codeLenses: vscode.CodeLens[] | undefined;
 }
 
 type ParserResult = ParserSuccess | undefined;
@@ -59,7 +65,7 @@ type ParserResult = ParserSuccess | undefined;
 // }
 
 /** Main controller class */
-export class Controller implements vscode.FoldingRangeProvider, vscode.DocumentSymbolProvider, vscode.DocumentLinkProvider<vscode.DocumentLink> {
+export class Controller implements vscode.FoldingRangeProvider, vscode.DocumentSymbolProvider, vscode.DocumentLinkProvider<vscode.DocumentLink>, vscode.CodeLensProvider<vscode.CodeLens>, vscode.TextDocumentContentProvider {
     // private readonly updateSessionMap: Map<string, UpdateSession> = new Map();
     private readonly parserResultMap: Map<string, ParserResult> = new Map();
 
@@ -106,16 +112,46 @@ export class Controller implements vscode.FoldingRangeProvider, vscode.DocumentS
             vscode.commands.executeCommand('editor.unfoldAll', ...args);
         };
 
+        /** 
+         * Callback function for the "Preview Scan Data" ("spec-log.editor.previewScanData") command. 
+         * The command expects two arguments: a URI of the log file and a range of the scan data in the log file.
+         */
+        const previewScanDataCommandHandler = async (...args: any[]) => {
+            if (
+                args.length === 4 &&
+                args[0] instanceof vscode.Uri &&
+                args[1] instanceof vscode.Range &&
+                typeof args[2] === 'string' &&
+                typeof args[3] === 'number'
+            ) {
+                // Get the base name of the log file.
+                // In the case slash is not found, `lastSlashIndex` will be -1 and the whole path will be treated as basename, which is acceptable.
+                const lastSlashIndex = args[0].path.lastIndexOf('/');
+                const basename = args[0].path.substring(lastSlashIndex + 1);
+
+                const uri = vscode.Uri.from({
+                    scheme: 'spec-log',
+                    path: `/spec-log Scan/${basename}/${args[2]} #${args[3]}`,
+                    query: args[0].toString(),
+                    fragment: JSON.stringify([args[1].start.line, args[1].start.character, args[1].end.line, args[1].end.character])
+                });
+                vscode.commands.executeCommand('vscode.openWith', uri, 'spec-data.preview.editor', { viewColumn: vscode.ViewColumn.Beside });
+            }
+        };
+
         // Register command handlers, providers, and event-callback functions.
         context.subscriptions.push(
             vscode.commands.registerCommand('spec-log.editor.foldLevel2', foldLevel2CommandHandler),
             vscode.commands.registerCommand('spec-log.editor.unfoldAll', unfoldAllCommandHandler),
+            vscode.commands.registerCommand('spec-log.editor.previewScanData', previewScanDataCommandHandler),
             vscode.workspace.onDidOpenTextDocument(textDocumentDidOpenListener),
             vscode.workspace.onDidChangeTextDocument(textDocumentDidChangeListener),
             vscode.workspace.onDidCloseTextDocument(textDocumentDidCloseListener),
             vscode.languages.registerFoldingRangeProvider(LOG_SELECTOR, this),
             vscode.languages.registerDocumentSymbolProvider(LOG_SELECTOR, this),
             vscode.languages.registerDocumentLinkProvider(LOG_SELECTOR, this),
+            vscode.languages.registerCodeLensProvider(LOG_SELECTOR, this),
+            vscode.workspace.registerTextDocumentContentProvider('spec-log', this),
         );
     }
 
@@ -138,6 +174,31 @@ export class Controller implements vscode.FoldingRangeProvider, vscode.DocumentS
         if (token.isCancellationRequested) { return; }
 
         return this.parserResultMap.get(document.uri.toString())?.documentLinks;
+    }
+
+    // Required implementation of vscode.DocumentLinkProvider.
+    public provideCodeLenses(document: vscode.TextDocument, token: vscode.CancellationToken): vscode.ProviderResult<vscode.CodeLens[]> {
+        if (token.isCancellationRequested) { return; }
+
+        return this.parserResultMap.get(document.uri.toString())?.codeLenses;
+    }
+
+    // Required implementation of vscode.TextDocumentContentProvider.
+    public provideTextDocumentContent(uri: vscode.Uri, token: vscode.CancellationToken): vscode.ProviderResult<string> {
+        if (token.isCancellationRequested) { return undefined; }
+
+        if (uri.scheme === 'spec-log') {
+            try {
+                const logFileUri = vscode.Uri.parse(uri.query);
+                const rangeArray = JSON.parse(uri.fragment) as [number, number, number, number];
+                return vscode.workspace.openTextDocument(logFileUri).then(logFileDoc => {
+                    return '# mode: csv-column\n' + logFileDoc.getText(new vscode.Range(...rangeArray));
+                });
+            } catch (error) {
+                console.error('Failed to provide text document content for spec-log URI:', error);
+            }
+        }
+        return undefined;
     }
 
     /**
@@ -175,6 +236,12 @@ function parseDocument(document: vscode.TextDocument, token?: vscode.Cancellatio
     const foldingRanges: vscode.FoldingRange[] = [];
     const documentSymbols: vscode.DocumentSymbol[] = [];
     const documentLinks: vscode.DocumentLink[] = [];
+
+    // The CodeLens feature is enabled only when the "fujidana.spec-data" extension exists;
+    // Fixed-width text data is supported since version 2.4.0 but currently
+    // the extension version is not checked.
+    let codeLenses = vscode.extensions.getExtension('fujidana.spec-data') ?
+        <vscode.CodeLens[]>[] : undefined;
 
     const lineCount = document.lineCount;
     let counter = 0;
@@ -227,7 +294,6 @@ function parseDocument(document: vscode.TextDocument, token?: vscode.Cancellatio
             const symbol = new vscode.DocumentSymbol(matches[1], matches[2], vscode.SymbolKind.EnumMember, currentLine.range, currentLine.range);
             prevWelcome.symbol.children.push(symbol);
             prevPrompt = { lineNumber: lineNumber, symbol: symbol };
-
         } else if ((matches = currentLine.text.match(WELCOME_LINE_REGEXP)) !== null && lineNumber > 0 && document.lineAt(lineNumber - 1).isEmptyOrWhitespace) {
             // In case the line is a welcome message like `Welcome to "spec" Release`,
             // which means spec has just started.
@@ -251,7 +317,9 @@ function parseDocument(document: vscode.TextDocument, token?: vscode.Cancellatio
             prevWelcome = { lineNumber: lineNumber - 1, symbol: symbol };
             prevPrompt = undefined;
         } else if ((matches = currentLine.text.match(SCAN_LINE_REGEXP)) !== null) {
-            // Make a link if a file path is found in a scan header line.
+            // In case the line is the header of a scan data block starting with `Scan 1   ...`
+
+            // Make a link if a file path is found in the scan header line.
             if (matches[5] && matches[5].length > 0) {
                 const range = new vscode.Range(lineNumber, matches[1].length + matches[4].length, lineNumber, matches[1].length + matches[4].length + matches[5].length);
                 let workspaceFolder: vscode.WorkspaceFolder | undefined;
@@ -262,7 +330,7 @@ function parseDocument(document: vscode.TextDocument, token?: vscode.Cancellatio
                 }
             }
 
-            // Consume the continuous lines if they consists of numbers scan data.
+            // Consume the continuous lines if they consists of numeric values only.
             if (prevPrompt && lineNumber + 4 < lineCount && document.lineAt(lineNumber + 2).isEmptyOrWhitespace && /\s*#/.test(document.lineAt(lineNumber + 3).text)) {
                 const scanCommandStr = document.lineAt(lineNumber + 1).text;
                 lineNumber += 4;
@@ -277,6 +345,16 @@ function parseDocument(document: vscode.TextDocument, token?: vscode.Cancellatio
 
                 const range = new vscode.Range(currentLine.range.start, document.lineAt(lineNumber).range.end);
                 prevPrompt.symbol.children.push(new vscode.DocumentSymbol(`Scan ${matches[2]}`, scanCommandStr, vscode.SymbolKind.Number, range, currentLine.range));
+
+                if (codeLenses) {
+                    const command: vscode.Command = {
+                        command: 'spec-log.editor.previewScanData',
+                        title: 'Preview Scan Data',
+                        arguments: [document.uri, range, matches[5] ?? '**NO DATA FILE**', parseInt(matches[2], 10)],
+                    };
+                    const codeLens = new vscode.CodeLens(currentLine.range, command);
+                    codeLenses.push(codeLens);
+                }
             }
         }
     }
@@ -301,5 +379,5 @@ function parseDocument(document: vscode.TextDocument, token?: vscode.Cancellatio
         prevWelcome.symbol.range = new vscode.Range(prevWelcome.symbol.range.start, eofPosition);
     }
 
-    return { foldingRanges, documentSymbols, documentLinks };
+    return { foldingRanges, documentSymbols, documentLinks, codeLenses };
 }

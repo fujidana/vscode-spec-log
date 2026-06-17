@@ -16,6 +16,7 @@ Read [Language Support in Visual Studio Code](https://code.visualstudio.com/docs
 * __Code navigation__ : Mark prompts such as `1.FOURC>` and scan header lines such as `Scan  6  Sat Apr 24 ...` for navigation and listed in the breadcrumbs.
   * __Show all symbol definitions within a document__
 * __Code folding__ : Make lines between two prompts and continous lines of numbers or time foldable.
+* __Display Scan Data in Graph__ : Show a link above a scan header line to open a preview of the scan data. "spec data" extension (`fujidana.spec-data`) is required to use this feature.
 * __Document links__ : Make a file path in a scan header a clickable link. Relative paths are resolved from the workspace folder, not the log file.
 
 ## What's __spec__?

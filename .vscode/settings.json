@@ -15,5 +15,8 @@
         "default": true,
         "no-duplicate-heading": false,
         "fenced-code-language": false
+    },
+    "json.schemaDownload.trustedDomains": {
+        "https://raw.githubusercontent.com/martinring/tmlanguage/": true
     }
 }

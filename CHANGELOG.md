@@ -4,6 +4,10 @@ All notable changes to the `fujidana/spec-log` extension will be documented in t
 
 ## [Unreleased]
 
+### Fixed
+
+- Fix an issue where VS Code fails to restore previews after relaunched. Issue [[#21](https://github.com/fujidana/vscode-spec-log/issues/21)]
+
 ## [2.2.0] -- 2026-06-17
 
 ### Added

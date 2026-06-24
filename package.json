@@ -27,7 +27,8 @@
 	},
 	"homepage": "https://github.com/fujidana/vscode-spec-log#readme",
 	"activationEvents": [
-		"onLanguage:spec-log"
+		"onLanguage:spec-log",
+		"onFileSystem:spec-log"
 	],
 	"main": "./dist/node/extension.js",
 	"browser": "./dist/web/extension.js",

@@ -4,9 +4,15 @@ All notable changes to the `fujidana/spec-log` extension will be documented in t
 
 ## [Unreleased]
 
+## [2.2.1] -- 2026-06-25
+
 ### Fixed
 
-- Fix an issue where VS Code fails to restore previews after relaunched. Issue [[#21](https://github.com/fujidana/vscode-spec-log/issues/21)]
+- Fix an issue where VS Code fails to restore scan previews after relaunched. Issue [[#21](https://github.com/fujidana/vscode-spec-log/issues/21)]
+
+### Changed
+
+- Raise the minimum VS Code version to 1.125.0.
 
 ## [2.2.0] -- 2026-06-17
 
@@ -180,7 +186,8 @@ All notable changes to the `fujidana/spec-log` extension will be documented in t
   - code navigation
   - folding
 
-[Unreleased]: https://github.com/fujidana/vscode-spec-log/compare/v2.2.0...HEAD
+[Unreleased]: https://github.com/fujidana/vscode-spec-log/compare/v2.2.1...HEAD
+[2.2.1]: https://github.com/fujidana/vscode-spec-log/compare/v2.2.0...v2.2.1
 [2.2.0]: https://github.com/fujidana/vscode-spec-log/compare/v2.1.1...v2.2.0
 [2.1.1]: https://github.com/fujidana/vscode-spec-log/compare/v2.1.0...v2.1.1
 [2.1.0]: https://github.com/fujidana/vscode-spec-log/compare/v2.0.0...v2.1.0

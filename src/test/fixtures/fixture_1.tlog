@@ -1,0 +1,82 @@
+
+                   Welcome to "spec" Release 6.09.12
+         Copyright (c) 1987-2020 Certified Scientific Software
+                          All rights reserved
+
+(Portions derived from a program developed at Harvard University.)
+(Linked with BSD libedit library for command line editing.)
+
+Using "/usr/local/lib/spec.d" for auxiliary file directory (SPECD).
+Restored state from "SPECD/fourc/userfiles/specuser_ttyp#S".
+
+Getting configuration parameters from "SPECD/fourc/config".
+Using Tsuji PM16C-04X (unit 0) firmware 1.56 20-02-12 on "192.168.0.2:7777".
+Using Tsuji PM16C-16 (unit 1) firmware 1.14 20-06-02 on "192.168.0.3:7777".
+Using Tsuji CT16-01 (unit 0) firmware 1.13 15-03-18 on "192.168.0.4:6666".
+
+Can't open data file, "(null)".
+No such file or directory.
+
+18.FOURC> if (whatis("DATAFILE")>>16&0x8000) {
+19.more> print "Warning, Data file is uninitialized!"
+20.more> else
+21.more> print "Data is being stored in", DATAFILE
+Data is being stored in /usr/alan/default.dat
+
+22.FOURC> abc = 1
+
+
+                   Welcome to "spec" Release 6.09.12
+         Copyright (c) 1987-2020 Certified Scientific Software
+                          All rights reserved
+
+(Portions derived from a program developed at Harvard University.)
+(Linked with BSD libedit library for command line editing.)
+
+Using "/usr/local/lib/spec.d" for auxiliary file directory (SPECD).
+Restored state from "SPECD/fourc/userfiles/specuser_ttyp#S".
+
+Getting configuration parameters from "SPECD/fourc/config".
+Using Tsuji PM16C-04X (unit 0) firmware 1.56 20-02-12 on "192.168.0.2:7777".
+Using Tsuji PM16C-16 (unit 1) firmware 1.14 20-06-02 on "192.168.0.3:7777".
+Using Tsuji CT16-01 (unit 0) firmware 1.13 15-03-18 on "192.168.0.4:6666".
+
+Can't open data file, "(null)".
+No such file or directory.
+
+27.FOURC> const abc = 1
+
+28.FOURC> newfile monoth_scan
+Using "./monoth_scan.spec".  Next scan is number 1.
+
+
+29.FOURC> umv monoth 5; dscan monoth 0 0.1 10 1
+
+MonoTheta 
+   5.8770 
+   5.5770 
+   5.2770 
+   5.0000 
+   5.0000 
+   5.0000 
+
+Total 11 points, 11 seconds
+
+Scan   1   Tue Feb 18 22:19:21 2025   file = ./monoth_scan.spec  eh1  user = eh1user
+ascan  monoth 5 5.1  10 1
+
+  # MonoTheta          I1    Seconds     Elapsed      I1_EH2     monoenc 
+  0    5.0000           0          1       1.042           0           5 
+  1    5.0100           0          1       2.538           0        5.01 
+  2    5.0200           0          1       4.019           0        5.02 
+  3    5.0300           0          1       5.522           0        5.03 
+  4    5.0399           0          1           7           0        5.04 
+  5    5.0500           0          1        8.49           0        5.05 
+  6    5.0600           0          1        9.97           0        5.06 
+  7    5.0700           0          1       11.45           0        5.07 
+  8    5.0799           0          1       12.96           0        5.08 
+  9    5.0900           0          1       14.45           0        5.09 
+ 10    5.1000           0          1       15.93           0         5.1 
+
+Returning monoth to 5
+

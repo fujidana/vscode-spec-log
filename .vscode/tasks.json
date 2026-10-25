@@ -11,6 +11,7 @@
 			},
 			"type": "npm",
 			"script": "compile",
+			"group": "build",
 			"problemMatcher": [
 				"$tsc",
 				"$eslint-stylish",
@@ -34,6 +35,18 @@
 				"kind": "build",
 				"isDefault": true
 			}
+		},
+		{
+			"label": "watch for tests",
+			"detail": "Watch tsc and esbuild for tests",
+			"icon": {
+				"id": "tools"
+			},
+			"dependsOn": [
+				"npm: watch:esbuild",
+				"npm: watch-tests"
+			],
+			"problemMatcher": []
 		},
 		{
 			"label": "npm: watch:esbuild",
@@ -64,18 +77,35 @@
 			"script": "watch-tests",
 			"group": "build",
 			"presentation": {
-				"reveal": "never",
-				"group": "watchers"
+				"group": "watchers",
+				"reveal": "never"
 			},
 			"isBackground": true,
 			"problemMatcher": "$tsc-watch"
 		},
 		{
-			"label": "tasks: watch-tests",
-			"dependsOn": [
-				"npm: watch",
-				"npm: watch-tests"
-			],
+			"label": "test",
+			"detail": "vscode-test",
+			"icon": {
+				"id": "beaker"
+			},
+			"type": "npm",
+			"script": "test",
+			"group": {
+				"kind": "test",
+				"isDefault": true
+			},
+			"problemMatcher": []
+		},
+		{
+			"label": "test-web",
+			"detail": "vscode-test-web --browserType=chromium --extensionDevelopmentPath=. --extensionTestsPath=dist/web/test/extensionTests.js",
+			"icon": {
+				"id": "beaker"
+			},
+			"type": "npm",
+			"script": "test-web",
+			"group": "test",
 			"problemMatcher": []
 		}
 	]

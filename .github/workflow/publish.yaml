@@ -1,0 +1,20 @@
+name: Publish Extension
+
+on:
+  push:
+    tags:
+      - v*.*.*
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: pnpm/setup@v3
+        with:
+          version: ^12.16.1
+          runtime: node@24
+          cache: true
+      # pnpm/setup runs `pnpm install` by default.
+      # - run: pnpm ci
+      - run: pnpm --package=npm --package=@vscode/vsce dlx vsce publish --no-dependencies -oidc

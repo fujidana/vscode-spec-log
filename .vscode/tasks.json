@@ -5,9 +5,9 @@
 	"tasks": [
 		{
 			"label": "compile",
-			"detail": "Run tsc, eslint, and esbuild",
+			"detail": "Run tsc (noEmit), eslint, and esbuild",
 			"icon": {
-				"id": "tools"
+				"id": "build"
 			},
 			"type": "npm",
 			"script": "compile",
@@ -20,9 +20,9 @@
 		},
 		{
 			"label": "watch",
-			"detail": "Watch tsc and esbuild",
+			"detail": "Watch tsc (noEmit) and esbuild",
 			"icon": {
-				"id": "tools"
+				"id": "build"
 			},
 			"dependsOn": [
 				"npm: watch:tsc",
@@ -37,19 +37,10 @@
 			}
 		},
 		{
-			"label": "watch for tests",
-			"detail": "Watch tsc and esbuild for tests",
-			"icon": {
-				"id": "tools"
-			},
-			"dependsOn": [
-				"npm: watch:esbuild",
-				"npm: watch-tests"
-			],
-			"problemMatcher": []
-		},
-		{
 			"label": "npm: watch:esbuild",
+			"icon": {
+				"id": "build"
+			},
 			"type": "npm",
 			"script": "watch:esbuild",
 			"group": "build",
@@ -62,6 +53,9 @@
 		},
 		{
 			"label": "npm: watch:tsc",
+			"icon": {
+				"id": "build"
+			},
 			"type": "npm",
 			"script": "watch:tsc",
 			"group": "build",
@@ -73,24 +67,32 @@
 			}
 		},
 		{
+			"label": "npm: watch-tests",
+			"icon": {
+				"id": "build"
+			},
 			"type": "npm",
 			"script": "watch-tests",
 			"group": "build",
+			"problemMatcher": "$tsc-watch",
+			"isBackground": true,
 			"presentation": {
 				"group": "watchers",
 				"reveal": "never"
-			},
-			"isBackground": true,
-			"problemMatcher": "$tsc-watch"
+			}
 		},
 		{
 			"label": "test",
-			"detail": "vscode-test",
+			"detail": "watch tsc (w/o noEmit) and esbuild, then run vscode-test",
 			"icon": {
 				"id": "beaker"
 			},
 			"type": "npm",
 			"script": "test",
+			"dependsOn": [
+				"npm: watch-tests",
+				"npm: watch:esbuild"
+			],
 			"group": {
 				"kind": "test",
 				"isDefault": true
@@ -99,12 +101,16 @@
 		},
 		{
 			"label": "test-web",
-			"detail": "vscode-test-web --browserType=chromium --extensionDevelopmentPath=. --extensionTestsPath=dist/web/test/extensionTests.js",
+			"detail": "Watch tsc (noEmit) and esbuild, then run vscode-test-web",
 			"icon": {
 				"id": "beaker"
 			},
 			"type": "npm",
 			"script": "test-web",
+			"dependsOn": [
+				"npm: watch:tsc",
+				"npm: watch:esbuild"
+			],
 			"group": "test",
 			"problemMatcher": []
 		}

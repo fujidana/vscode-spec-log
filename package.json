@@ -106,9 +106,7 @@
 		"watch:esbuild": "node esbuild.js --watch",
 		"compile-tests": "tsc --project . --outDir out",
 		"watch-tests": "tsc --project . --outDir out --watch --preserveWatchOutput",
-		"pretest": "pnpm run lint && pnpm run compile-tests",
 		"test": "vscode-test",
-		"pretest-web": "pnpm run compile",
 		"test-web": "vscode-test-web --browserType=chromium --extensionDevelopmentPath=. --extensionTestsPath=dist/web/test/extensionTests.js",
 		"run-in-browser": "vscode-test-web --browserType=chromium --extensionDevelopmentPath=. .",
 		"js-yaml": "js-yaml syntaxes/specLog.tmLanguage.yaml > syntaxes/specLog.tmLanguage.json"

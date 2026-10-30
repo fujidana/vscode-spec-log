@@ -17,4 +17,4 @@ jobs:
           cache: true
       # pnpm/setup runs `pnpm install` by default.
       # - run: pnpm ci
-      - run: pnpm --package=npm --package=@vscode/vsce dlx vsce publish --no-dependencies -oidc
+      - run: pnpm --package=npm --package=@vscode/vsce dlx vsce publish --no-dependencies --oidc

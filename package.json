@@ -3,9 +3,9 @@
 	"name": "spec-log",
 	"displayName": "spec log",
 	"description": "spec log file support for VS Code",
-	"version": "2.2.1",
+	"version": "2.2.2",
 	"engines": {
-		"vscode": "^1.125.0"
+		"vscode": "^1.140.0"
 	},
 	"categories": [
 		"Programming Languages"
@@ -116,17 +116,17 @@
 		"@types/assert": "^1.5.11",
 		"@types/mocha": "^10.0.10",
 		"@types/node": "24.x",
-		"@types/vscode": "^1.125.0",
+		"@types/vscode": "^1.140.0",
 		"@vscode/test-cli": "^0.0.15",
 		"@vscode/test-electron": "^3.1.0",
 		"@vscode/test-web": "^0.0.81",
 		"assert": "^2.1.0",
 		"esbuild": "^0.28.2",
-		"eslint": "^10.12.0",
+		"eslint": "^10.13.0",
 		"glob": "^13.0.6",
-		"js-yaml": "^5.4.2",
+		"js-yaml": "^5.5.0",
 		"mocha": "^11.8.0",
 		"typescript": "^6.0.3",
-		"typescript-eslint": "^8.71.0"
+		"typescript-eslint": "^8.72.1"
 	}
 }

@@ -114,7 +114,11 @@ export class Controller implements vscode.FoldingRangeProvider, vscode.DocumentS
 
         /** 
          * Callback function for the "Preview Scan Data" ("spec-log.editor.previewScanData") command. 
-         * The command expects two arguments: a URI of the log file and a range of the scan data in the log file.
+         * The command expects four arguments:
+         * - URI of the log file
+         * - range of a scan in the log file
+         * - name of a scan
+         * - index of a scan
          */
         const previewScanDataCommandHandler = async (...args: any[]) => {
             if (
@@ -240,7 +244,7 @@ function parseDocument(document: vscode.TextDocument, token?: vscode.Cancellatio
     // The CodeLens feature is enabled only when the "fujidana.spec-data" extension exists;
     // Fixed-width text data is supported since version 2.4.0 but currently
     // the extension version is not checked.
-    let codeLenses = vscode.extensions.getExtension('fujidana.spec-data') ?
+    const codeLenses = vscode.extensions.getExtension('fujidana.spec-data') ?
         <vscode.CodeLens[]>[] : undefined;
 
     const lineCount = document.lineCount;

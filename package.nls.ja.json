@@ -1,4 +1,6 @@
 {
+    "configuration.spec-log.title": "spec log",
+    "configuration.spec-log.editor.scrollOnUpdate.description": "外部プロセスによってファイルが更新されたとき、アクティブな spec ログエディターを末尾までスクロールした状態に保ちます。",
     "command.spec-log.editor.foldLevel2.title": "プロンプトを折りたたむ",
     "command.spec-log.editor.unfoldAll.title": "すべて展開"
 }

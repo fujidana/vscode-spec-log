@@ -83,6 +83,7 @@ export class Controller implements vscode.FoldingRangeProvider, vscode.DocumentS
             const document = event.document;
             if (vscode.languages.match(LOG_SELECTOR, document)) {
                 this.parserResultMap.set(document.uri.toString(), parseDocument(document));
+                this.revealEndAfterExternalChange(event);
             }
         };
 
@@ -203,6 +204,25 @@ export class Controller implements vscode.FoldingRangeProvider, vscode.DocumentS
             }
         }
         return undefined;
+    }
+
+    /**
+     * Keep the active log editor at the end when its contents are updated externally.
+     * Local edits are dirty and must not move the user's cursor or viewport.
+     */
+    private revealEndAfterExternalChange(event: vscode.TextDocumentChangeEvent): void {
+        const scrollOnUpdate = vscode.workspace.getConfiguration('spec-log.editor').get<boolean>('scrollOnUpdate', false);
+        if (!scrollOnUpdate || event.reason !== undefined || event.document.isDirty) {
+            return;
+        }
+
+        const editor = vscode.window.activeTextEditor;
+        if (!editor || editor.document.uri.toString() !== event.document.uri.toString()) {
+            return;
+        }
+
+        const lastLine = event.document.lineAt(event.document.lineCount - 1);
+        editor.revealRange(lastLine.range);
     }
 
     /**

@@ -6,6 +6,10 @@ All notable changes to the `fujidana/spec-log` VS Code extension will be documen
 
 ## [Unreleased]
 
+### Added
+
+- Add an opt-in setting to keep the active log editor scrolled to the end when the log file is updated externally.
+
 ## [2.2.2] -- 2026-10-30
 
 ### Changed

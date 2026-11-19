@@ -3,7 +3,7 @@
 	"name": "spec-log",
 	"displayName": "spec log",
 	"description": "spec log file support for VS Code",
-	"version": "2.2.2",
+	"version": "2.3.0-alpha.0",
 	"engines": {
 		"vscode": "^1.140.0"
 	},
@@ -52,6 +52,19 @@
 				"path": "./syntaxes/specLog.tmLanguage.json"
 			}
 		],
+		"configuration": {
+			"title": "%configuration.spec-log.title%",
+			"properties": {
+				"spec-log.editor.scrollOnUpdate": {
+					"type": "boolean",
+					"default": false,
+					"tags": [
+						"preview"
+					],
+					"description": "%configuration.spec-log.editor.scrollOnUpdate.description%"
+				}
+			}
+		},
 		"commands": [
 			{
 				"command": "spec-log.editor.foldLevel2",

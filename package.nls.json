@@ -1,4 +1,6 @@
 {
+	"configuration.spec-log.title": "spec log",
+	"configuration.spec-log.editor.scrollOnUpdate.description": "Keep the active spec log editor scrolled to the end when the file is updated by an external process.",
 	"command.spec-log.editor.foldLevel2.title": "Fold Prompts",
 	"command.spec-log.editor.unfoldAll.title": "Unfold All"
 }

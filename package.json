@@ -3,7 +3,7 @@
 	"name": "spec-log",
 	"displayName": "spec log",
 	"description": "spec log file support for VS Code",
-	"version": "2.3.0-alpha.0",
+	"version": "2.3.0-alpha.1",
 	"engines": {
 		"vscode": "^1.140.0"
 	},
@@ -57,7 +57,7 @@
 			"properties": {
 				"spec-log.editor.scrollOnUpdate": {
 					"type": "boolean",
-					"default": false,
+					"default": true,
 					"tags": [
 						"preview"
 					],

@@ -18,7 +18,7 @@ Read [Language Support in Visual Studio Code](https://code.visualstudio.com/docs
 * __Code folding__ : Make lines between two prompts and continous lines of numbers or time foldable.
 * __Display Scan Data in Graph__ : Show a link above a scan header line to open a preview of the scan data. "spec data" extension (`fujidana.spec-data`) is required to use this feature.
 * __Document links__ : Make a file path in a scan header a clickable link. Relative paths are resolved from the workspace folder, not the log file.
-* __Live log monitoring__ : When enabled, keep the active log editor scrolled to the end when the file is updated by an external process. Local edits do not change the editor's viewport. It is disabled by default; enable `spec-log.editor.scrollOnUpdate` in Settings.
+* __Live scrolling__ : Keep the editor scrolled to the end when text is appended externally. One can disable it by setting `spec-log.editor.scrollOnUpdate` to `false`.
 
 ## What's __spec__?
 

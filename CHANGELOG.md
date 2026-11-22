@@ -8,7 +8,8 @@ All notable changes to the `fujidana/spec-log` VS Code extension will be documen
 
 ### Added
 
-- Add an opt-in setting to keep the active log editor scrolled to the end when the log file is updated externally.
+- Keep the active log editor scrolled to the end when the log file is updated externally. See PR [#27](https://github.com/fujidana/vscode-spec-log/pull/27)
+  - One can disable it by setting `spec-log.editor.scrollOnUpdate` to `false`.
 
 ## [2.2.2] -- 2026-10-30
 

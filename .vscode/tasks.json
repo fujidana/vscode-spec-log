@@ -5,7 +5,7 @@
 	"tasks": [
 		{
 			"label": "compile",
-			"detail": "Run tsc (noEmit), eslint, and esbuild",
+			"detail": "Run eslint, tsc (noEmit), and esbuild",
 			"icon": {
 				"id": "build"
 			},
@@ -13,8 +13,8 @@
 			"script": "compile",
 			"group": "build",
 			"problemMatcher": [
-				"$tsc",
 				"$eslint-stylish",
+				"$tsc",
 				"$esbuild"
 			]
 		},

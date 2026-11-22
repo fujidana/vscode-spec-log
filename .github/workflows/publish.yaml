@@ -12,12 +12,13 @@ jobs:
       contents: read
       id-token: write
     steps:
-      - uses: actions/checkout@v7
-      - uses: pnpm/setup@v3
+      - uses: actions/checkout@v7.0.1
+      - uses: pnpm/setup@v3.1.2
         with:
           version: ^12.16.1
           runtime: node@24
           cache: true
-      # pnpm/setup runs `pnpm install` by default.
+          install: true
+      # pnpm/setup runs `pnpm install` by default, and thus we don't need to run `pnpm ci` here.
       # - run: pnpm ci
-      - run: pnpm --package=npm --package=@vscode/vsce dlx vsce publish --no-dependencies --oidc
+      - run: pnpm --package=npm --package=@vscode/vsce --allow-build=@vscode/vsce-sign dlx vsce publish --no-dependencies --oidc

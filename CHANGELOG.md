@@ -6,6 +6,8 @@ All notable changes to the `fujidana/spec-log` VS Code extension will be documen
 
 ## [Unreleased]
 
+## [2.3.0] -- 2026-11-22
+
 ### Added
 
 - Keep the active log editor scrolled to the end when the log file is updated externally. See PR [#27](https://github.com/fujidana/vscode-spec-log/pull/27)
@@ -199,7 +201,8 @@ All notable changes to the `fujidana/spec-log` VS Code extension will be documen
   - code navigation
   - folding
 
-[Unreleased]: https://github.com/fujidana/vscode-spec-log/compare/v2.2.2...HEAD
+[Unreleased]: https://github.com/fujidana/vscode-spec-log/compare/v2.3.0...HEAD
+[2.3.0]: https://github.com/fujidana/vscode-spec-log/compare/v2.2.2...v2.3.0
 [2.2.2]: https://github.com/fujidana/vscode-spec-log/compare/v2.2.1...v2.2.2
 [2.2.1]: https://github.com/fujidana/vscode-spec-log/compare/v2.2.0...v2.2.1
 [2.2.0]: https://github.com/fujidana/vscode-spec-log/compare/v2.1.1...v2.2.0

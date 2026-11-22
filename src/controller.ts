@@ -207,22 +207,43 @@ export class Controller implements vscode.FoldingRangeProvider, vscode.DocumentS
     }
 
     /**
-     * Keep the active log editor at the end when its contents are updated externally.
-     * Local edits are dirty and must not move the user's cursor or viewport.
+     * Scroll to the end of the document after document updates by external
+     * sources, if the last line was visible before the update.
+     * Updates that replace or delete text are ignored; only text insertions 
+     * are considered.
+     * Currently, the extension assumes that the insertion is at the end of the
+     * document, regardless of the actual insertion position.
      */
     private revealEndAfterExternalChange(event: vscode.TextDocumentChangeEvent): void {
-        const scrollOnUpdate = vscode.workspace.getConfiguration('spec-log.editor').get<boolean>('scrollOnUpdate', false);
-        if (!scrollOnUpdate || event.reason !== undefined || event.document.isDirty) {
+        const scrollOnUpdate = vscode.workspace.getConfiguration('spec-log.editor').get<boolean>('scrollOnUpdate', true);
+        if (
+            !scrollOnUpdate ||
+            event.reason !== undefined ||
+            event.document.isDirty ||
+            event.contentChanges.some(change => change.rangeLength !== 0)
+        ) {
             return;
         }
 
-        const editor = vscode.window.activeTextEditor;
-        if (!editor || editor.document.uri.toString() !== event.document.uri.toString()) {
-            return;
-        }
-
+        const insertedLineCount = event.contentChanges.reduce(
+            (count, change) => count + change.text.split('\n').length - 1,
+            0
+        );
+        const previousLastLine = event.document.lineCount - 1 - insertedLineCount;
         const lastLine = event.document.lineAt(event.document.lineCount - 1);
-        editor.revealRange(lastLine.range);
+
+        for (const editor of vscode.window.visibleTextEditors) {
+            if (editor.document.uri.toString() !== event.document.uri.toString()) {
+                continue;
+            }
+
+            const wasLastLineVisible = editor.visibleRanges.some(range =>
+                range.start.line <= previousLastLine && previousLastLine <= range.end.line
+            );
+            if (wasLastLineVisible) {
+                editor.revealRange(lastLine.range);
+            }
+        }
     }
 
     /**
